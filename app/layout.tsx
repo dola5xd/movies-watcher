@@ -42,7 +42,7 @@ export default function RootLayout({
             draggable
             pauseOnHover
             theme="dark"
-            className={"text-xs text-nowrap font-bold w-1/2"}
+            className={"text-xs text-nowrap font-bold px-4"}
           />
         </SessionProvider>
       </body>

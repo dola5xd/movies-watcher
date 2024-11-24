@@ -8,7 +8,7 @@ function Overview({ overview }: { overview: string }) {
 
   if (!overview)
     return (
-      <h1 className="text-primery-grey text-sm">No overview for this show!</h1>
+      <h1 className="text-sm text-primery-grey">No overview for this show!</h1>
     );
 
   return (
@@ -16,7 +16,7 @@ function Overview({ overview }: { overview: string }) {
       {overviewText}
       <span
         onClick={() => setShortOverview((prev) => !prev)}
-        className=" text-primery-green underline cursor-pointer"
+        className="underline cursor-pointer  text-primery-green"
       >
         {short ? "More" : " Less"}
       </span>

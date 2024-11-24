@@ -50,10 +50,10 @@ function Page() {
   };
 
   return (
-    <main className="min-h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium pt-36 pb-10">
+    <main className="flex flex-col items-center justify-center min-h-screen gap-4 pb-10 font-medium bg-primery-black-800 pt-36">
       <Link
         href={"/"}
-        className="absolute top-20 left-10 flex items-center gap-2 text-sm"
+        className="absolute flex items-center gap-2 text-sm top-20 left-10"
       >
         <CgArrowLeft />
         Back To Home page
@@ -67,7 +67,7 @@ function Page() {
             <MdLocalMovies />
             Movies Watcher
           </span>
-          <p className="text-primery-grey text-base">
+          <p className="text-base text-primery-grey">
             Join us and create account!
           </p>
         </h1>
@@ -141,7 +141,7 @@ function Page() {
         </div>
         <button
           type="submit"
-          className="bg-primery-black/90 border hover:bg-black duration-500 border-white py-3 text-primery-grey font-bold text-lg rounded"
+          className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:bg-black text-primery-grey"
         >
           Register
         </button>

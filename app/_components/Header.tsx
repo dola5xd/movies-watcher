@@ -18,14 +18,14 @@ function Header() {
   }, [openSearch, inputRef]);
 
   return (
-    <header className=" absolute z-50 w-full bg-primery-black-900 bg-opacity-25 flex justify-between items-center px-5 md:px-10 pt-7 pb-5 ">
+    <header className="absolute z-50 flex items-center justify-between w-full px-5 pb-5 bg-opacity-25  bg-primery-black-900 md:px-10 pt-7">
       <Logo />
       <div className="flex items-center gap-4 text-3xl">
         <IoIosSearch
           onClick={() => {
             setSearch((prev) => !prev);
           }}
-          className=" cursor-pointer"
+          className="cursor-pointer "
         />
         <UserProfile />
         <MobileNav />
@@ -35,7 +35,7 @@ function Header() {
           <input
             type="text"
             placeholder="Search about"
-            className="rounded px-3 py-4 bg-primery-black-700 text-base w-full outline-none"
+            className="w-full px-3 py-4 text-base rounded outline-none bg-primery-black-700"
             ref={inputRef}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -54,7 +54,7 @@ function Header() {
                 redirect(`/search?query=${query}`);
               }
             }}
-            className="bg-primery-red absolute right-0 px-3 h-full rounded text-base text-primery-white font-bold"
+            className="absolute right-0 h-full px-3 text-base font-bold rounded bg-primery-red text-primery-white"
           >
             Search
           </button>

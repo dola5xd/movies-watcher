@@ -62,7 +62,7 @@ function ActionBtns({ type, id }: { type: string; id: number }) {
 
   const link = `https://vidsrc.me/embed/${type}/${id}`;
   return (
-    <div className="py-2 flex items-center gap-3 flex-wrap">
+    <div className="flex flex-wrap items-center gap-3 py-2">
       <Link href={link} target="_blank">
         <button
           className="bg-primery-green text-base px-5 py-2 rounded hover:bg-opacity-90 duration-500 flex items-center gap-2 hover:w-full [&>span]:hidden [&>span]:hover:inline"
@@ -84,7 +84,7 @@ function ActionBtns({ type, id }: { type: string; id: number }) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 duration-500"
+          className="duration-500 size-6"
         >
           <path
             strokeLinecap="round"

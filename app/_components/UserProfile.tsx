@@ -57,10 +57,10 @@ function UserProfile() {
             />
             <span>Hello {loggedInUser && loggedInUser.name}!</span>
           </li>
-          <li className="border-primery-grey border-b cursor-pointer">
+          <li className="border-b cursor-pointer border-primery-grey">
             <Link href={"/settings"}>Settings</Link>
           </li>
-          <li className="text-primery-red cursor-pointer" onClick={logout}>
+          <li className="cursor-pointer text-primery-red" onClick={logout}>
             Logout
           </li>
         </ul>

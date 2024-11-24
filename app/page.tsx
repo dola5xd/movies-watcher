@@ -59,7 +59,7 @@ async function page() {
         <HomeSection headH1={"Anime"}>
           <MoviesSlider data={animeShows} />
         </HomeSection>
-        <footer className="px-10 flex flex-col gap-4 md:gap-7 py-7 text-base md:text-2xl">
+        <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 md:text-2xl">
           <h2>
             &apos; Our platform is trusted by millions & featuers best uptaded
             movies all around the world &apos;

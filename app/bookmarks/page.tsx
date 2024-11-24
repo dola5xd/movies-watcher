@@ -38,15 +38,15 @@ function Page() {
     <>
       <Header />
       <section className="pt-24">
-        <h1 className="pt-10 px-4">{`${savedShows.length} Bookmarked`}</h1>
+        <h1 className="px-4 pt-10">{`${savedShows.length} Bookmarked`}</h1>
         {showData.length > 0 ? (
-          <div className="flex items-center justify-center px-5 flex-wrap gap-4 gap-y-7 py-7">
+          <div className="flex flex-wrap items-center justify-center gap-4 px-5 gap-y-7 py-7">
             {showData.map((show) => (
               <SearchPoster show={show} key={show.id} fullQuality={false} />
             ))}
           </div>
         ) : (
-          <h3 className="text-primery-grey text-base px-4 py-7">
+          <h3 className="px-4 text-base text-primery-grey py-7">
             Sorry! there isn&apos;t shows to show!
           </h3>
         )}

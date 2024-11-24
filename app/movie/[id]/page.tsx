@@ -74,7 +74,7 @@ async function page({
             className="object-cover"
           />
         </div>
-        <div className="px-7 flex gap-2 md:gap-5 mb-3 md:mb-5 flex-col items-start md:flex-row z-10">
+        <div className="z-10 flex flex-col items-start gap-2 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row">
           <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md">
             <Image
               src={imagesUrl + show.poster_path || "/default-poster.jpg"}
@@ -83,11 +83,11 @@ async function page({
               className="object-cover rounded-md"
             />
           </div>
-          <div className="flex flex-col gap-2 justify-end items-start relative bottom-0">
-            <span className="bg-primery-black-800 text-sm font-bold  capitalize px-4 py-2 rounded ">
+          <div className="relative bottom-0 flex flex-col items-start justify-end gap-2">
+            <span className="px-4 py-2 text-sm font-bold capitalize rounded bg-primery-black-800 ">
               Movie
             </span>
-            <h1 className="font-medium text-2xl">{String(title)}</h1>
+            <h1 className="text-2xl font-medium">{String(title)}</h1>
             <h3 className="flex items-center gap-1 *:text-xs  *:text-primery-white/75 font-medium flex-wrap">
               <span>
                 {Math.floor(Number(runtime) / 60)}h {Number(runtime) % 60}m
@@ -110,12 +110,12 @@ async function page({
           </div>
         </div>
       </div>
-      <div className="px-7 py-4 flex flex-col gap-7 items-start ">
+      <div className="flex flex-col items-start py-4 px-7 gap-7 ">
         <div>
           <h3 className="font-bold">Story Line</h3>
           <Overview overview={String(overview)} />
         </div>
-        <div className=" text-sm gap-5 w-full">
+        <div className="w-full gap-5 text-sm ">
           <h1 className="text-3xl font-bold">Top Cast</h1>
           <CastSlider cast={cast} />
         </div>
@@ -124,7 +124,7 @@ async function page({
         <h1>Similar Shows for you</h1>
         <SimilerShowsSlider shows={similarShows} />
       </div>
-      <footer className="px-10 flex flex-col gap-4 md:gap-7 py-7 text-base md:text-2xl">
+      <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 md:text-2xl">
         <h2>
           &apos; Our platform is trusted by millions & featuers best uptaded
           movies all around the world &apos;

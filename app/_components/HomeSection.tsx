@@ -11,7 +11,7 @@ function HomeSection({
 }) {
   return (
     <section className={className + " my-7"}>
-      {headH1 && <h1 className="font-bold text-2xl ml-4">{headH1}</h1>}
+      {headH1 && <h1 className="ml-4 text-2xl font-bold">{headH1}</h1>}
       {children}
     </section>
   );

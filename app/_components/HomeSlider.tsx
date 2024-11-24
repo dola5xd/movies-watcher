@@ -43,9 +43,9 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
             alt={
               value.title ? String(value.title) : String(value.name) + " poster"
             }
-            className="object-cover rounded-lg -z-10  "
+            className="object-cover rounded-lg -z-10 "
           />
-          <div className="z-10 h-full flex flex-col text-base gap-2 pl-2">
+          <div className="z-10 flex flex-col h-full gap-2 pl-2 text-base">
             <h1>{value.title ? value.title : value.name}</h1>
             <h5 className="flex items-center *:flex *:items-center gap-2">
               <span>

@@ -16,9 +16,9 @@ async function Page({
   return (
     <>
       <Header />
-      <main className="pt-28 px-7 w-full">
+      <main className="w-full pt-28 px-7">
         <h1 className="font-bold">Series</h1>
-        <div className="flex items-center justify-center flex-wrap gap-4 gap-y-7 py-7">
+        <div className="flex flex-wrap items-center justify-center gap-4 gap-y-7 py-7">
           {data?.map(
             (show) =>
               show.poster_path && (

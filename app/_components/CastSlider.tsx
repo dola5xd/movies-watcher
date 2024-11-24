@@ -22,7 +22,7 @@ function CastSlider({ cast }: { cast: CastData[] }) {
         disableOnInteraction: false,
       }}
       effect="card"
-      className="flex gap-20 items-center  py-5 "
+      className="flex items-center gap-20 py-5 "
       grabCursor
     >
       {cast?.map(

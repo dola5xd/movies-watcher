@@ -13,7 +13,7 @@ function MobileNav() {
   return (
     <>
       <BiMenu
-        className=" hover:scale-110 duration-500 cursor-pointer hover:text-primery-red"
+        className="duration-500 cursor-pointer hover:scale-110 hover:text-primery-red"
         onClick={() => setMenu((prev) => !prev)}
       />
 
@@ -24,10 +24,10 @@ function MobileNav() {
           opacity: menu ? 1 : 0,
         }}
         transition={{ width: { duration: 0.5 } }}
-        className="w-1/2 p-5 z-50 fixed right-0 top-0 bg-primery-black-700 min-h-screen flex-col overflow-hidden hidden"
+        className="fixed top-0 right-0 z-50 flex-col hidden w-1/2 min-h-screen p-5 overflow-hidden bg-primery-black-700"
       >
         <span
-          className=" text-3xl w-full flex justify-end cursor-pointer hover:text-primery-red duration-500"
+          className="flex justify-end w-full text-3xl duration-500 cursor-pointer hover:text-primery-red"
           onClick={() => setMenu(false)}
         >
           <CgClose />

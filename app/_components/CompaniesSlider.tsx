@@ -7,7 +7,7 @@ function CompaniesSlider() {
   return (
     <div className="w-full inline-flex flex-nowrap overflow-hidden gap-[700px] py-10 pr-[50px]">
       <motion.div
-        className="flex items-center justify-between gap-7 px-7 w-full"
+        className="flex items-center justify-between w-full gap-7 px-7"
         variants={{
           animate: { x: "-412%" },
           init: { x: 0 },
@@ -27,7 +27,7 @@ function CompaniesSlider() {
         ))}
       </motion.div>
       <motion.div
-        className="flex items-center justify-between gap-7 px-7 w-full"
+        className="flex items-center justify-between w-full gap-7 px-7"
         variants={{
           animate: { x: "-412%" },
           init: { x: 0 },

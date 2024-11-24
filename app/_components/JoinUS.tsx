@@ -36,7 +36,7 @@ function JoinUS() {
     >
       <h1 className="font-bold">Join Us Now!</h1>
       <div className="flex items-center gap-4 *:rounded *:py-2 hover:*:bg-opacity-75 *:duration-500 *:text-base">
-        <Link href="/register" className="bg-primery-green px-4">
+        <Link href="/register" className="px-4 bg-primery-green">
           Register
         </Link>
         <Link

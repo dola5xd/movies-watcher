@@ -45,9 +45,9 @@ function Page() {
   return (
     <>
       <Header />
-      <main className="h-screen pt-28 px-5 md:px-10">
+      <main className="h-screen px-5 pt-28 md:px-10">
         <h1>🙋‍♂️ Hi! {String(loggedInUser?.name)}</h1>
-        <h3 className="mt-7 text-center">Let&apos;s edit your profile!</h3>
+        <h3 className="text-center mt-7">Let&apos;s edit your profile!</h3>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="px-7 md:px-20 bg-primery-black-700 py-10 rounded-lg mt-3 flex flex-col gap-5 [&>div>input]:bg-primery-black-800 [&>div>input:disabled]:bg-primery-black-900 [&>div>input:disabled]:text-primery-grey [&>div>input:disabled]:cursor-not-allowed"
@@ -65,7 +65,7 @@ function Page() {
               }`}
             />
             {errors.name && (
-              <span className="text-primery-red text-sm">
+              <span className="text-sm text-primery-red">
                 {errors.name.message}
               </span>
             )}
@@ -85,7 +85,7 @@ function Page() {
               }`}
             />
             {errors.email && (
-              <span className="text-primery-red text-sm">
+              <span className="text-sm text-primery-red">
                 {errors.email.message}
               </span>
             )}
@@ -103,14 +103,14 @@ function Page() {
               }`}
             />
             {errors.avatar && (
-              <span className="text-primery-red text-sm">
+              <span className="text-sm text-primery-red">
                 {errors.avatar.message}
               </span>
             )}
           </div>
           <button
             type="submit"
-            className="bg-primery-black/90 border duration-500 border-white hover:border-primery-red hover:text-primery-red py-3 text-primery-grey font-bold text-lg rounded"
+            className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:border-primery-red hover:text-primery-red text-primery-grey"
           >
             Update
           </button>

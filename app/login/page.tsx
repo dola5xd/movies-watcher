@@ -35,10 +35,10 @@ function Page() {
   };
 
   return (
-    <main className="h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium pt-10">
+    <main className="flex flex-col items-center justify-center h-screen gap-4 pt-10 font-medium bg-primery-black-800">
       <Link
         href={"/"}
-        className="absolute top-20 left-10 flex items-center gap-2 text-sm"
+        className="absolute flex items-center gap-2 text-sm top-20 left-10"
       >
         <CgArrowLeft />
         Back To Home page
@@ -52,7 +52,7 @@ function Page() {
             <MdLocalMovies />
             Movies Watcher
           </span>
-          <p className="text-primery-grey text-base">Login to your account</p>
+          <p className="text-base text-primery-grey">Login to your account</p>
         </h1>
         <div>
           <label htmlFor="Email">Email</label>
@@ -94,7 +94,7 @@ function Page() {
         </div>
         <button
           type="submit"
-          className="bg-primery-black/90 border hover:bg-black duration-500 border-white py-3 text-primery-grey font-bold text-lg rounded"
+          className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:bg-black text-primery-grey"
         >
           Login
         </button>

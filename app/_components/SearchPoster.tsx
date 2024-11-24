@@ -36,9 +36,9 @@ function SearchPoster({
         }
         fill
         alt={title ? String(title) : String(name) + " poster"}
-        className="object-cover rounded-lg -z-10  "
+        className="object-cover rounded-lg -z-10 "
       />
-      <div className="z-10 h-full flex flex-col text-base gap-2 pl-2 text-balance ">
+      <div className="z-10 flex flex-col h-full gap-2 pl-2 text-base text-balance ">
         <h1>{title ? title : name}</h1>
         <h5 className="flex items-center *:flex *:items-center gap-2">
           <span>
