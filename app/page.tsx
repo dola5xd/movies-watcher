@@ -1,101 +1,114 @@
-import Image from "next/image";
+import Link from "next/link";
+import Header from "./_components/Header";
+import CompaniesSlider from "./_components/CompaniesSlider";
+import HomeSection from "./_components/HomeSection";
+import HomeSlider from "./_components/HomeSlider";
+import MoviesSlider from "./_components/MoviesSlider";
+import { FaFacebook } from "react-icons/fa6";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+import {
+  getMovies,
+  getNowPlaying,
+  getSeries,
+  getTrending,
+  getCovers,
+  getAnimeShows,
+} from "./_lib/Api";
+import JoinUS from "./_components/JoinUS";
 
-export default function Home() {
+export const revalidate = 3600; //revalidate data every 1 hour
+
+async function page() {
+  const [
+    coverMovies,
+    moviesData,
+    nowPlaying,
+    popularMovies,
+    seriesData,
+    animeShows,
+  ] = await Promise.all([
+    getCovers(),
+    getMovies(),
+    getNowPlaying(),
+    getTrending(),
+    getSeries(),
+    getAnimeShows(),
+  ]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+    <>
+      <Header />
+      <main className="h-screen">
+        <HomeSlider data={coverMovies} />
+        <CompaniesSlider />
+        <HomeSection headH1="Just Release">
+          <MoviesSlider data={nowPlaying} />
+        </HomeSection>
+        <HomeSection headH1={"Populer Of The Week"}>
+          <MoviesSlider data={popularMovies} />
+        </HomeSection>
+        <HomeSection className="px-7 py-7">
+          <JoinUS />
+        </HomeSection>
+        <HomeSection headH1={"Movies"}>
+          <MoviesSlider data={moviesData} />
+        </HomeSection>
+        <HomeSection headH1={"Series"}>
+          <MoviesSlider data={seriesData} />
+        </HomeSection>
+        <HomeSection headH1={"Anime"}>
+          <MoviesSlider data={animeShows} />
+        </HomeSection>
+        <footer className="px-10 flex flex-col gap-7 py-7">
+          <h2>
+            &apos; Our platform is trusted by millions & featuers best uptaded
+            movies all around the world &apos;
+          </h2>
+          <div className="flex items-center gap-4 py-7">
+            <Link href="./">
+              <FaFacebook />
+            </Link>
+            <Link href="./">
+              <FaLinkedin />
+            </Link>
+            <Link href="./">
+              <FaInstagram />
+            </Link>
+            <Link href="./">
+              <FaGithub />
+            </Link>
+          </div>
+          <ul className=" flex items-center gap-4 text-lg hover:*:underline *:duration-500 *:text-nowrap">
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/bookmarks">bookmarks</Link>
+            </li>
+            <li>
+              <Link href="/movies">Movies</Link>
+            </li>
+            <li>
+              <Link href="/series">TV Shows</Link>
+            </li>
+            <li>
+              <Link href="/anime">Anime</Link>
+            </li>
+          </ul>
+          <p className="text-base">
+            &copy; {new Date().getFullYear()} Developed by{" "}
+            <Link
+              href="https://my-portfolio-website-orpin.vercel.app/"
+              target="blank"
+              className="underline"
+            >
+              Adel Yasser
+            </Link>{" "}
+          </p>
+        </footer>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
+
+export default page;
