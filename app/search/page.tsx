@@ -35,7 +35,7 @@ async function page({
         <h1 className="pt-10 px-4">{`${data.length} Results for ' ${query} '`}</h1>
         <Suspense fallback={<Loading />}>
           {data.length > 0 ? (
-            <div className="flex items-center justify-between px-5 flex-wrap gap-4 py-7">
+            <div className="flex items-center justify-center px-5 flex-wrap gap-4 py-7">
               {data?.map((show) => (
                 <SearchPoster show={show} key={show.id} fullQuality={false} />
               ))}

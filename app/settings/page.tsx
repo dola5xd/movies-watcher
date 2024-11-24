@@ -45,12 +45,12 @@ function Page() {
   return (
     <>
       <Header />
-      <main className="h-screen pt-28 px-10">
+      <main className="h-screen pt-28 px-5 md:px-10">
         <h1>🙋‍♂️ Hi! {String(loggedInUser?.name)}</h1>
         <h3 className="mt-7 text-center">Let&apos;s edit your profile!</h3>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="px-20 bg-primery-black-700 py-10 rounded-lg mt-3 flex flex-col gap-5 [&>div>input]:bg-primery-black-800 [&>div>input:disabled]:bg-primery-black-900 [&>div>input:disabled]:text-primery-grey [&>div>input:disabled]:cursor-not-allowed"
+          className="px-7 md:px-20 bg-primery-black-700 py-10 rounded-lg mt-3 flex flex-col gap-5 [&>div>input]:bg-primery-black-800 [&>div>input:disabled]:bg-primery-black-900 [&>div>input:disabled]:text-primery-grey [&>div>input:disabled]:cursor-not-allowed"
         >
           <div className="flex flex-col gap-2">
             <label htmlFor="name">Username</label>
@@ -96,7 +96,7 @@ function Page() {
               type="file"
               {...register("avatar")}
               placeholder="avatar"
-              className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
+              className={`bg-transparent outline outline-1 py-2 px-4 rounded w-full file:py-1 file:px-2 file:bg-transparent text-xs file:border file:border-primery-red file:text-primery-white ${
                 errors.avatar
                   ? "outline-primery-red"
                   : "outline-primery-grey/25"

@@ -18,7 +18,7 @@ function Header() {
   }, [openSearch, inputRef]);
 
   return (
-    <header className=" absolute z-50 w-full bg-primery-black-900 bg-opacity-25 flex justify-between items-center px-10 pt-7 pb-5 ">
+    <header className=" absolute z-50 w-full bg-primery-black-900 bg-opacity-25 flex justify-between items-center px-5 md:px-10 pt-7 pb-5 ">
       <Logo />
       <div className="flex items-center gap-4 text-3xl">
         <IoIosSearch

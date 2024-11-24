@@ -7,15 +7,18 @@ import "swiper/css/effect-cards";
 import { ShowData } from "../_lib/Api";
 
 function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches;
   return (
     <Swiper
       modules={[Autoplay]}
-      slidesPerView={2}
+      slidesPerView={isMobile ? 1 : 2}
       loop={true}
       spaceBetween={50}
       centeredSlides={true}
       autoplay={{
-        delay: 5000,
+        delay: isMobile ? 2500 : 5000,
         disableOnInteraction: false,
       }}
       effect="slide"

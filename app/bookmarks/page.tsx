@@ -40,7 +40,7 @@ function Page() {
       <section className="pt-24">
         <h1 className="pt-10 px-4">{`${savedShows.length} Bookmarked`}</h1>
         {showData.length > 0 ? (
-          <div className="flex items-center justify-between px-5 flex-wrap gap-4 py-7">
+          <div className="flex items-center justify-center px-5 flex-wrap gap-4 gap-y-7 py-7">
             {showData.map((show) => (
               <SearchPoster show={show} key={show.id} fullQuality={false} />
             ))}

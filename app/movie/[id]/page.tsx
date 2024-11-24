@@ -74,8 +74,8 @@ async function page({
             className="object-cover"
           />
         </div>
-        <div className="px-7 flex gap-5 mb-5  z-10">
-          <div className="relative h-[350px] min-w-[200px] rounded-md">
+        <div className="px-7 flex gap-2 md:gap-5 mb-3 md:mb-5 flex-col items-start md:flex-row z-10">
+          <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md">
             <Image
               src={imagesUrl + show.poster_path || "/default-poster.jpg"}
               alt={String(title) + "poster"}
@@ -124,51 +124,51 @@ async function page({
         <h1>Similar Shows for you</h1>
         <SimilerShowsSlider shows={similarShows} />
       </div>
-      <footer className="px-10 flex flex-col gap-7 py-7">
+      <footer className="px-10 flex flex-col gap-4 md:gap-7 py-7 text-base md:text-2xl">
         <h2>
-          &apos; Our platform is trusted by millions & features best updated
+          &apos; Our platform is trusted by millions & featuers best uptaded
           movies all around the world &apos;
         </h2>
-        <div className="flex items-center gap-4 py-7">
-          <Link href="https://www.facebook.com/">
+        <div className="flex items-center gap-2 md:gap-4 py-7">
+          <Link href="./">
             <FaFacebook />
           </Link>
-          <Link href="https://www.linkedin.com/">
+          <Link href="./">
             <FaLinkedin />
           </Link>
-          <Link href="https://www.instagram.com/">
+          <Link href="./">
             <FaInstagram />
           </Link>
-          <Link href="https://www.github.com/">
+          <Link href="./">
             <FaGithub />
           </Link>
         </div>
-        <ul className=" flex items-center gap-4 text-lg hover:*:underline *:duration-500 *:text-nowrap">
+        <ul className=" flex items-center gap-y-1 gap-x-4 md:gap-4 flex-wrap text-lg hover:*:underline *:duration-500 *:text-nowrap">
           <li>
-            <Link href="./">Home</Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="./">Discover</Link>
+            <Link href="/bookmarks">bookmarks</Link>
           </li>
           <li>
-            <Link href="./">Movie Release</Link>
+            <Link href="/movies">Movies</Link>
           </li>
           <li>
-            <Link href="./">Forum</Link>
+            <Link href="/series">TV Shows</Link>
           </li>
           <li>
-            <Link href="./">About</Link>
+            <Link href="/anime">Anime</Link>
           </li>
         </ul>
         <p className="text-base">
-          &copy; {new Date().getFullYear()} Developed by{" "}
+          &copy; {new Date().getFullYear()} Developed with ❤ by{" "}
           <Link
             href="https://my-portfolio-website-orpin.vercel.app/"
             target="blank"
             className="underline"
           >
             Adel Yasser
-          </Link>
+          </Link>{" "}
         </p>
       </footer>
     </>

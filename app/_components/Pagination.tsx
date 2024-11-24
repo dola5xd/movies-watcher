@@ -33,7 +33,7 @@ function Pagination({ total: pageNumber }: { total: number }) {
   if (pageCount <= 1) return null;
 
   return (
-    <div className="w-full flex items-center justify-between py-7">
+    <div className="w-full flex flex-col-reverse md:flex-row gap-y-5 items-center justify-between py-7">
       <p className="ml-[0.8rem] [&>span]:font-semibold text-sm">
         Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
         <span>

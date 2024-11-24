@@ -47,7 +47,7 @@ async function page() {
         <HomeSection headH1={"Populer Of The Week"}>
           <MoviesSlider data={popularMovies} />
         </HomeSection>
-        <HomeSection className="px-7 py-7">
+        <HomeSection className="px-0 md:px-7 py-7">
           <JoinUS />
         </HomeSection>
         <HomeSection headH1={"Movies"}>
@@ -59,12 +59,12 @@ async function page() {
         <HomeSection headH1={"Anime"}>
           <MoviesSlider data={animeShows} />
         </HomeSection>
-        <footer className="px-10 flex flex-col gap-7 py-7">
+        <footer className="px-10 flex flex-col gap-4 md:gap-7 py-7 text-base md:text-2xl">
           <h2>
             &apos; Our platform is trusted by millions & featuers best uptaded
             movies all around the world &apos;
           </h2>
-          <div className="flex items-center gap-4 py-7">
+          <div className="flex items-center gap-2 md:gap-4 py-7">
             <Link href="./">
               <FaFacebook />
             </Link>
@@ -78,7 +78,7 @@ async function page() {
               <FaGithub />
             </Link>
           </div>
-          <ul className=" flex items-center gap-4 text-lg hover:*:underline *:duration-500 *:text-nowrap">
+          <ul className=" flex items-center gap-y-1 gap-x-4 md:gap-4 flex-wrap text-lg hover:*:underline *:duration-500 *:text-nowrap">
             <li>
               <Link href="/">Home</Link>
             </li>
@@ -96,7 +96,7 @@ async function page() {
             </li>
           </ul>
           <p className="text-base">
-            &copy; {new Date().getFullYear()} Developed by{" "}
+            &copy; {new Date().getFullYear()} Developed with ❤ by{" "}
             <Link
               href="https://my-portfolio-website-orpin.vercel.app/"
               target="blank"

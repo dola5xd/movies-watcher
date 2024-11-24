@@ -29,7 +29,7 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
       {data?.map((value) => (
         <SwiperSlide
           key={value.id}
-          className="min-h-[350px] relative flex flex-col before-overlay justify-end pb-4 "
+          className="min-h-[350px] relative flex flex-col before-overlay justify-end pb-10 pl-4 "
           onClick={() =>
             redirect(
               value.first_air_date ? `tv/${value.id}` : `movie/${value.id}`

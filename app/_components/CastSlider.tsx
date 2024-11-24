@@ -7,10 +7,14 @@ import { CastData } from "../_lib/Api";
 import CastSlide from "./CastSlide";
 
 function CastSlider({ cast }: { cast: CastData[] }) {
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches;
+
   return (
     <Swiper
       modules={[Autoplay, EffectCards]}
-      slidesPerView={1}
+      slidesPerView={isMobile ? 1 : 3}
       loop={true}
       spaceBetween={350}
       autoplay={{

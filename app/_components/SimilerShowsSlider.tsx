@@ -7,10 +7,14 @@ import { ShowData } from "../_lib/Api";
 import SearchPoster from "@/app/_components/SearchPoster";
 
 function SimilerShowsSlider({ shows }: { shows: ShowData[] }) {
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches;
+
   return (
     <Swiper
       modules={[Autoplay, EffectCards]}
-      slidesPerView={2}
+      slidesPerView={isMobile ? 1 : 3}
       loop={true}
       spaceBetween={50}
       autoplay={{
@@ -18,7 +22,7 @@ function SimilerShowsSlider({ shows }: { shows: ShowData[] }) {
         disableOnInteraction: false,
       }}
       effect="card"
-      className="flex gap-20 items-center  py-5 "
+      className="flex gap-20 items-center justify-center py-5 "
       grabCursor
     >
       {shows?.map(

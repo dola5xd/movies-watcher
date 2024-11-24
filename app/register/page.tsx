@@ -50,7 +50,7 @@ function Page() {
   };
 
   return (
-    <main className="h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium">
+    <main className="min-h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium pt-36 pb-10">
       <Link
         href={"/"}
         className="absolute top-20 left-10 flex items-center gap-2 text-sm"
@@ -113,7 +113,7 @@ function Page() {
             type="file"
             {...register("avatar", { required: "avatar is required" })}
             placeholder="avatar"
-            className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
+            className={`bg-transparent outline outline-1 py-2 px-4 rounded w-full file:py-1 file:px-2 file:bg-transparent text-xs file:border file:border-primery-grey file:mr-2 file:text-primery-white ${
               errors.avatar ? "outline-primery-red" : "outline-primery-grey/25"
             }`}
           />
@@ -147,7 +147,7 @@ function Page() {
         </button>
         {message && <p className="text-sm text-primery-red">{message}</p>}
         <p className="text-base text-center text-primery-grey">
-          Alerady have account?
+          Alerady have account?{" "}
           <Link href={"/login"} className="underline text-primery-white">
             Login now!
           </Link>

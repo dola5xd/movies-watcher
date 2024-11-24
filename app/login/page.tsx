@@ -35,7 +35,7 @@ function Page() {
   };
 
   return (
-    <main className="h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium">
+    <main className="h-screen flex items-center flex-col justify-center gap-4 bg-primery-black-800 font-medium pt-10">
       <Link
         href={"/"}
         className="absolute top-20 left-10 flex items-center gap-2 text-sm"
@@ -98,7 +98,13 @@ function Page() {
         >
           Login
         </button>
-        {message && <p>{message}</p>}
+        {message && <p className="text-sm text-primery-red">{message}</p>}
+        <p className="text-base text-center text-primery-grey">
+          Create Account now!{" "}
+          <Link href={"/login"} className="underline text-primery-white">
+            Register now!
+          </Link>
+        </p>
       </form>
     </main>
   );
