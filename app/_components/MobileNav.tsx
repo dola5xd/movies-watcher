@@ -32,12 +32,12 @@ function MobileNav() {
         >
           <CgClose />
         </span>
-        <ul className="py-10 flex flex-col gap-4 text-lg hover:[&>li]:translate-x-2 hover:[&>li]:opacity-50 [&>li]:duration-500 [&>li]:text-nowrap">
+        <ul className="py-10 flex flex-col gap-4 text-lg hover:[&>li]:translate-x-2 hover:[&>li]:opacity-50 [&>li]:duration-500 [&>li]:text-nowrap hover:[&>li:last-child]:translate-x-0 hover:[&>li:last-child]:opacity-100">
           <li>
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/bookmarks">bookmarks</Link>
+            <Link href="/bookmarks">Bookmarks</Link>
           </li>
           <li>
             <Link href="/movies">Movies</Link>
@@ -50,12 +50,12 @@ function MobileNav() {
           </li>
 
           {!loggedInUser && (
-            <li className="flex items-center gap-2 [&>a>button]:px-4 [&>a>button]:py-1 [&>a>button]:rounded">
-              <Link href="/">
-                <button className="bg-primery-green">Login</button>
+            <li className="flex items-center flex-wrap justify-center gap-2 [&>a]:w-full [&>a]:px-4 [&>a]:py-1 [&>a]:rounded [&>a]:text-center">
+              <Link href="/login" className="bg-primery-green">
+                Login
               </Link>
-              <Link href="/">
-                <button className="border border-primery-grey">Register</button>
+              <Link href="/register" className="border border-primery-grey">
+                Register
               </Link>
             </li>
           )}

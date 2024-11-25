@@ -59,22 +59,25 @@ async function page() {
         <HomeSection headH1={"Anime"}>
           <MoviesSlider data={animeShows} />
         </HomeSection>
-        <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 md:text-2xl">
+        <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 sm:text-2xl">
           <h2>
             &apos; Our platform is trusted by millions & featuers best uptaded
             movies all around the world &apos;
           </h2>
-          <div className="flex items-center gap-2 md:gap-4 py-7">
-            <Link href="./">
+          <div className="flex items-center gap-5 text-2xl py-7">
+            <Link href="https://www.facebook.com/dola2005ti" target="_blank">
               <FaFacebook />
             </Link>
-            <Link href="./">
+            <Link
+              href="https://www.linkedin.com/in/adel-yasser-a28181242/"
+              target="_blank"
+            >
               <FaLinkedin />
             </Link>
-            <Link href="./">
+            <Link href="https://www.instagram.com/3del_5xd" target="_blank">
               <FaInstagram />
             </Link>
-            <Link href="./">
+            <Link href="https://github.com/dola5xd" target="_blank">
               <FaGithub />
             </Link>
           </div>
@@ -83,7 +86,7 @@ async function page() {
               <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/bookmarks">bookmarks</Link>
+              <Link href="/bookmarks">Bookmarks</Link>
             </li>
             <li>
               <Link href="/movies">Movies</Link>
@@ -95,7 +98,7 @@ async function page() {
               <Link href="/anime">Anime</Link>
             </li>
           </ul>
-          <p className="text-base">
+          <p className="text-base text-pretty">
             &copy; {new Date().getFullYear()} Developed with ❤ by{" "}
             <Link
               href="https://my-portfolio-website-orpin.vercel.app/"

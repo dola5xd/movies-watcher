@@ -22,7 +22,7 @@ function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
         disableOnInteraction: false,
       }}
       effect="slide"
-      className="flex items-center py-5 gap-7 px-7"
+      className="flex items-center px-10 py-5 gap-7"
       grabCursor
     >
       {data?.map((value) => (

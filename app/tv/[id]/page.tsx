@@ -70,8 +70,8 @@ async function page({
             className="object-cover"
           />
         </div>
-        <div className="z-10 flex flex-col items-start gap-2 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row md:content-end">
-          <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md">
+        <div className="z-10 flex flex-col items-start gap-5 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row md:content-end">
+          <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md justify-end">
             <Image
               src={imagesUrl + show.poster_path}
               alt={name + "poster"}
@@ -79,7 +79,7 @@ async function page({
               className="object-cover duration-500 rounded-md hover:scale-105"
             />{" "}
           </div>
-          <div className="relative bottom-0 flex flex-col items-start justify-end h-full">
+          <div className="flex flex-col items-start justify-end md:h-[350px] md:pb-5">
             <span className="px-4 py-2 text-sm font-bold capitalize rounded bg-primery-black-800 ">
               series
             </span>
@@ -120,22 +120,25 @@ async function page({
           <SimilerShowsSlider shows={similarShows} />
         </div>
       )}
-      <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 md:text-2xl">
+      <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 sm:text-2xl">
         <h2>
           &apos; Our platform is trusted by millions & featuers best uptaded
           movies all around the world &apos;
         </h2>
-        <div className="flex items-center gap-2 md:gap-4 py-7">
-          <Link href="./">
+        <div className="flex items-center gap-5 text-2xl py-7">
+          <Link href="https://www.facebook.com/dola2005ti" target="_blank">
             <FaFacebook />
           </Link>
-          <Link href="./">
+          <Link
+            href="https://www.linkedin.com/in/adel-yasser-a28181242/"
+            target="_blank"
+          >
             <FaLinkedin />
           </Link>
-          <Link href="./">
+          <Link href="https://www.instagram.com/3del_5xd" target="_blank">
             <FaInstagram />
           </Link>
-          <Link href="./">
+          <Link href="https://github.com/dola5xd" target="_blank">
             <FaGithub />
           </Link>
         </div>
@@ -144,7 +147,7 @@ async function page({
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/bookmarks">bookmarks</Link>
+            <Link href="/bookmarks">Bookmarks</Link>
           </li>
           <li>
             <Link href="/movies">Movies</Link>
@@ -156,7 +159,7 @@ async function page({
             <Link href="/anime">Anime</Link>
           </li>
         </ul>
-        <p className="text-base">
+        <p className="text-base text-pretty">
           &copy; {new Date().getFullYear()} Developed with ❤ by{" "}
           <Link
             href="https://my-portfolio-website-orpin.vercel.app/"

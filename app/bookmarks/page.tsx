@@ -38,9 +38,9 @@ function Page() {
     <>
       <Header />
       <section className="pt-24">
-        <h1 className="px-4 pt-10">{`${savedShows.length} Bookmarked`}</h1>
+        <h1 className="px-4 pt-10 md:px-28">{`${savedShows.length} Bookmarked`}</h1>
         {showData.length > 0 ? (
-          <div className="flex flex-wrap items-center justify-center gap-4 px-5 gap-y-7 py-7">
+          <div className="flex flex-wrap items-center justify-center gap-4 px-5 md:gap-10 gap-y-7 py-7">
             {showData.map((show) => (
               <SearchPoster show={show} key={show.id} fullQuality={false} />
             ))}

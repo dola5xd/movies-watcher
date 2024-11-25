@@ -24,7 +24,7 @@ function MoviePoster({
 
   return (
     <div
-      className="relative flex flex-col min-h-[350px] min-w-[200px] rounded-lg before-overlay justify-end pb-4 hover:before:bg-opacity-0 duration-500 "
+      className="relative flex flex-col min-h-[350px] aspect-[4/7] sm:aspect-[4/5] md:aspect-[4/7] rounded-lg before-overlay justify-end content-end pb-4 hover:before:bg-opacity-0 duration-500 "
       onClick={() => redirect(first_air_date ? `tv/${id}` : `movie/${id}`)}
     >
       <Image
@@ -37,7 +37,7 @@ function MoviePoster({
         alt={title ? String(title) : String(name) + " poster"}
         className="object-cover rounded-lg -z-10 "
       />
-      <div className="z-10 flex flex-col h-full gap-2 pl-2 text-base">
+      <div className="z-10 flex flex-col min-h-[350px] gap-2 pl-2 text-base sm:text-2xl justify-end">
         <h1>{title ? title : name}</h1>
         <h5 className="flex items-center *:flex *:items-center gap-2">
           <span>

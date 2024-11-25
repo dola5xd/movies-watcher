@@ -45,7 +45,7 @@ function Page() {
       </Link>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full px-10 gap-5 [&>div]:font-bold [&>div]:flex [&>div]:flex-col [&>div]:gap-3 [&>div>input]:bg-transparent [&>div>input]:outline [&>div>input]:outline-1 [&>div>input]:placeholder:text-primery-grey/25 [&>div>input]:outline-primery-grey/25 [&>div>input]:py-2 [&>div>input]:px-4 [&>div>input]:rounded [&>div>input]:text-base [&>div>input]:w-full [&>div>label]:text-base"
+        className="flex flex-col w-full px-10 md:px-20 gap-5 [&>div]:font-bold [&>div]:flex [&>div]:flex-col [&>div]:gap-3 [&>div>input]:bg-transparent [&>div>input]:outline [&>div>input]:outline-1 [&>div>input]:placeholder:text-primery-grey/25 [&>div>input]:outline-primery-grey/25 [&>div>input]:py-2 [&>div>input]:px-4 [&>div>input]:rounded [&>div>input]:text-base [&>div>input]:w-full [&>div>label]:text-base"
       >
         <h1 className="text-center text-nowrap">
           <span className="flex items-center gap-1">
@@ -101,7 +101,7 @@ function Page() {
         {message && <p className="text-sm text-primery-red">{message}</p>}
         <p className="text-base text-center text-primery-grey">
           Create Account now!{" "}
-          <Link href={"/login"} className="underline text-primery-white">
+          <Link href={"/register"} className="underline text-primery-white">
             Register now!
           </Link>
         </p>

@@ -25,7 +25,7 @@ function SearchPoster({
   return (
     <div
       className={`relative flex flex-col min-h-[400px] w-full md:w-[250px]
-      } rounded-lg before-overlay justify-end pb-4 before:bg-opacity-40 hover:before:bg-opacity-20 duration-500 cursor-pointer`}
+      } rounded-lg before-overlay justify-end pb-4 before:bg-opacity-60 hover:before:bg-opacity-20 duration-500 cursor-pointer`}
       onClick={() => redirect(first_air_date ? `/tv/${id}` : `/movie/${id}`)}
     >
       <Image

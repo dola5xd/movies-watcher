@@ -32,10 +32,10 @@ async function page({
     <>
       <Header />
       <section className="pt-24">
-        <h1 className="px-4 pt-10">{`${data.length} Results for ' ${query} '`}</h1>
+        <h1 className="px-4 pt-10 md:px-24">{`${data.length} Results for ' ${query} '`}</h1>
         <Suspense fallback={<Loading />}>
           {data.length > 0 ? (
-            <div className="flex flex-wrap items-center justify-center gap-4 px-5 py-7">
+            <div className="flex flex-wrap items-center justify-center gap-4 px-5 py-7 md:gap-10">
               {data?.map((show) => (
                 <SearchPoster show={show} key={show.id} fullQuality={false} />
               ))}
