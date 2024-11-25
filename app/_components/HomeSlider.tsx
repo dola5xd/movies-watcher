@@ -6,6 +6,7 @@ import { ShowData } from "../_lib/Api";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { redirect } from "next/navigation";
+import { imagesUrl } from "../_lib/constants";
 
 function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
   const isMobile =
@@ -26,7 +27,7 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
         enabled: isMobile,
         clickable: true,
       }}
-      className="relative top-0 left-0 mySwiper "
+      className="relative top-0 left-0 lg:top-10 mySwiper "
       grabCursor
     >
       {data?.map((value) => (
@@ -40,7 +41,7 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
           }
         >
           <Image
-            src={"http://image.tmdb.org/t/p/w500" + value.backdrop_path}
+            src={imagesUrl + value.backdrop_path}
             fill
             quality={100}
             alt={

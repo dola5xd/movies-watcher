@@ -11,10 +11,14 @@ function SimilerShowsSlider({ shows }: { shows: ShowData[] }) {
     typeof window !== "undefined" &&
     window.matchMedia("(max-width: 767px)").matches;
 
+  const isSmallScreen =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 1000px)").matches;
+
   return (
     <Swiper
       modules={[Autoplay, EffectCards]}
-      slidesPerView={isMobile ? 1 : 3}
+      slidesPerView={isMobile ? 1 : isSmallScreen ? 3 : 5}
       loop={true}
       spaceBetween={50}
       autoplay={{
@@ -22,7 +26,7 @@ function SimilerShowsSlider({ shows }: { shows: ShowData[] }) {
         disableOnInteraction: false,
       }}
       effect="card"
-      className="flex gap-20 items-center justify-center py-5 "
+      className="flex items-center justify-center gap-20 py-5 "
       grabCursor
     >
       {shows?.map(

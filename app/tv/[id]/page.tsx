@@ -57,8 +57,8 @@ async function page({
   return (
     <>
       <Header />
-      <div className=" flex flex-col justify-end min-h-[550px] overflow-x-hidden">
-        <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60 z-0">
+      <div className=" flex flex-col justify-end min-h-[550px] overflow-x-hidden lg:mx-20">
+        <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60 z-0 lg:left-0">
           <Image
             src={
               show.backdrop_path
@@ -70,7 +70,7 @@ async function page({
             className="object-cover"
           />
         </div>
-        <div className="z-10 flex flex-col items-start gap-5 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row md:content-end">
+        <div className="z-10 flex flex-col items-start gap-5 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row md:content-end ">
           <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md justify-end">
             <Image
               src={imagesUrl + show.poster_path}
@@ -104,19 +104,21 @@ async function page({
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-start py-4 px-7 gap-7">
+      <div className="flex flex-col items-start py-4 px-7 gap-7 lg:px-10">
         <div>
           <h3 className="font-bold">Story Line</h3>
           <Overview overview={String(overview)} />
         </div>
-        <div className="w-full gap-5 text-sm ">
-          <h1 className="text-3xl font-bold">Top Cast</h1>
-          <CastSlider cast={cast} />
-        </div>
+        {cast.length !== 0 && (
+          <div className="w-full gap-5 text-sm ">
+            <h1 className="text-3xl font-bold">Top Cast</h1>
+            <CastSlider cast={cast} />
+          </div>
+        )}
       </div>
       {similarShows?.length > 1 && (
-        <div className="px-5">
-          <h1>Similar Shows for you</h1>
+        <div className="px-5 lg:px-10">
+          <h1 className="font-bold">Similar Shows for you</h1>
           <SimilerShowsSlider shows={similarShows} />
         </div>
       )}

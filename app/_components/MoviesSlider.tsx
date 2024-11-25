@@ -10,10 +10,13 @@ function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
   const isMobile =
     typeof window !== "undefined" &&
     window.matchMedia("(max-width: 767px)").matches;
+  const isSmallScreen =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 1000px)").matches;
   return (
     <Swiper
       modules={[Autoplay]}
-      slidesPerView={isMobile ? 1 : 2}
+      slidesPerView={isMobile ? 1 : isSmallScreen ? 2 : 4}
       loop={true}
       spaceBetween={50}
       centeredSlides={true}
@@ -22,7 +25,7 @@ function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
         disableOnInteraction: false,
       }}
       effect="slide"
-      className="flex items-center px-10 py-5 gap-7"
+      className="flex items-center px-10 py-5 lg:px-20 gap-7"
       grabCursor
     >
       {data?.map((value) => (

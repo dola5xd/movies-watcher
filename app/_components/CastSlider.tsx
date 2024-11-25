@@ -11,12 +11,16 @@ function CastSlider({ cast }: { cast: CastData[] }) {
     typeof window !== "undefined" &&
     window.matchMedia("(max-width: 767px)").matches;
 
+  const isSmallScreen =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 1000px)").matches;
+
   return (
     <Swiper
       modules={[Autoplay, EffectCards]}
-      slidesPerView={isMobile ? 1 : 3}
+      slidesPerView={isMobile ? 1 : isSmallScreen ? 3 : 4}
       loop={true}
-      spaceBetween={350}
+      spaceBetween={isSmallScreen ? 350 : 150}
       autoplay={{
         delay: 2000,
         disableOnInteraction: false,

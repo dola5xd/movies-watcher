@@ -18,11 +18,13 @@ function Page() {
     formState: { errors },
   } = useForm<Inputs>();
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const { setLoggedInUser } = useSession();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      setLoading(true);
       await account.createEmailPasswordSession(data.email, data.password);
       setLoggedInUser(await account.get());
 
@@ -31,6 +33,8 @@ function Page() {
     } catch (error) {
       toast.error((error as Error).message);
       setMessage((error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,7 +49,7 @@ function Page() {
       </Link>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full px-10 md:px-20 gap-5 [&>div]:font-bold [&>div]:flex [&>div]:flex-col [&>div]:gap-3 [&>div>input]:bg-transparent [&>div>input]:outline [&>div>input]:outline-1 [&>div>input]:placeholder:text-primery-grey/25 [&>div>input]:outline-primery-grey/25 [&>div>input]:py-2 [&>div>input]:px-4 [&>div>input]:rounded [&>div>input]:text-base [&>div>input]:w-full [&>div>label]:text-base"
+        className="flex flex-col w-full px-10 lg:w-1/2 gap-5 md:px-20 [&>div]:font-bold [&>div]:flex [&>div]:flex-col [&>div]:gap-3 [&>div>input]:bg-transparent [&>div>input]:outline [&>div>input]:outline-2 [&>div>input]:placeholder:text-primery-grey/25 [&>div>input]:outline-primery-grey/25 [&>div>input]:py-2 [&>div>input]:px-4 [&>div>input]:rounded [&>div>input]:text-base [&>div>input]:w-full [&>div>label]:text-base"
       >
         <h1 className="text-center text-nowrap">
           <span className="flex items-center gap-1">
@@ -58,6 +62,12 @@ function Page() {
           <label htmlFor="Email">Email</label>
           <input
             type="email"
+            autoComplete="off"
+            readOnly
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              target.removeAttribute("readOnly");
+            }}
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -71,13 +81,21 @@ function Page() {
             }`}
           />
           {errors.email && (
-            <span className="text-primery-red">{errors.email.message}</span>
+            <span className="text-sm text-primery-red">
+              {errors.email.message}
+            </span>
           )}
         </div>
         <div>
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            autoComplete="off"
+            readOnly
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              target.removeAttribute("readOnly");
+            }}
             {...register("password", {
               required: "Password is required",
             })}
@@ -89,14 +107,17 @@ function Page() {
             }`}
           />
           {errors.password && (
-            <span className="text-primery-red">{errors.password.message}</span>
+            <span className="text-sm text-primery-red">
+              {errors.password.message}
+            </span>
           )}
         </div>
         <button
           type="submit"
-          className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:bg-black text-primery-grey"
+          className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:bg-black text-primery-grey disabled:cursor-not-allowed"
+          disabled={loading}
         >
-          Login
+          {loading ? "Login..." : "Login!"}
         </button>
         {message && <p className="text-sm text-primery-red">{message}</p>}
         <p className="text-base text-center text-primery-grey">

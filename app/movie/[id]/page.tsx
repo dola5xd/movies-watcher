@@ -61,8 +61,8 @@ async function page({
   return (
     <>
       <Header />
-      <div className=" flex flex-col justify-end min-h-[550px] ">
-        <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60  z-0">
+      <div className=" flex flex-col justify-end min-h-[550px] lg:mx-20">
+        <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60 z-0 lg:left-0">
           <Image
             src={
               show.backdrop_path
@@ -115,10 +115,12 @@ async function page({
           <h3 className="font-bold">Story Line</h3>
           <Overview overview={String(overview)} />
         </div>
-        <div className="w-full gap-5 text-sm ">
-          <h1 className="text-3xl font-bold">Top Cast</h1>
-          <CastSlider cast={cast} />
-        </div>
+        {cast.length !== 0 && (
+          <div className="w-full gap-5 text-sm ">
+            <h1 className="text-3xl font-bold">Top Cast</h1>
+            <CastSlider cast={cast} />
+          </div>
+        )}
       </div>
       <div className="px-5">
         <h1>Similar Shows for you</h1>

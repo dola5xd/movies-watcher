@@ -8,7 +8,9 @@ import { RxAvatar } from "react-icons/rx";
 
 function UserProfile() {
   const { loggedInUser, setLoggedInUser } = useSession();
+
   const navigate = useRouter();
+
   const logout = async () => {
     await account.deleteSession("current");
     setLoggedInUser(null);
@@ -29,12 +31,15 @@ function UserProfile() {
         {loggedInUser ? (
           <Image
             src={
-              loggedInUser.prefs.avatarId
+              !loggedInUser.prefs.avatarId && loggedInUser.prefs.avatar
+                ? loggedInUser.prefs.avatar
+                : loggedInUser.prefs.avatarId
                 ? `https://cloud.appwrite.io/v1/storage/buckets/6741ac790037f830945b/files/${loggedInUser.prefs.avatarId}/view?project=67419a430000aaacd6ba&project=67419a430000aaacd6ba`
                 : "/default-avatar.avif"
             }
             width={40}
             height={40}
+            quality={50}
             alt="Profile avatar"
             className="rounded-full object-cover w-[40px] h-[40px]"
           />
@@ -47,11 +52,15 @@ function UserProfile() {
           <li className="flex flex-col items-center gap-2 border-b border-primery-grey">
             <Image
               src={
-                `https://cloud.appwrite.io/v1/storage/buckets/6741ac790037f830945b/files/${loggedInUser.prefs.avatarId}/view?project=67419a430000aaacd6ba&project=67419a430000aaacd6ba` ||
-                "/default-avatar.avif"
+                !loggedInUser.prefs.avatarId && loggedInUser.prefs.avatar
+                  ? loggedInUser.prefs.avatar
+                  : loggedInUser.prefs.avatarId
+                  ? `https://cloud.appwrite.io/v1/storage/buckets/6741ac790037f830945b/files/${loggedInUser.prefs.avatarId}/view?project=67419a430000aaacd6ba&project=67419a430000aaacd6ba`
+                  : "/default-avatar.avif"
               }
               width={50}
               height={50}
+              quality={50}
               alt="Profile avatar"
               className="rounded-full object-cover w-[40px] h-[40px]"
             />

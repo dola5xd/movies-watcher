@@ -47,7 +47,7 @@ async function page() {
         <HomeSection headH1={"Populer Of The Week"}>
           <MoviesSlider data={popularMovies} />
         </HomeSection>
-        <HomeSection className="px-0 md:px-7 py-7">
+        <HomeSection className="px-0 md:px-7 lg:px-20 py-7">
           <JoinUS />
         </HomeSection>
         <HomeSection headH1={"Movies"}>
