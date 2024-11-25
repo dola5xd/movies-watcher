@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movies Watcher 🎥
 
-## Getting Started
+**Movies Watcher** is a web application designed to help users manage and track their favorite movies. Add movies to your watchlist, mark them as watched, and explore your collection seamlessly with a clean and responsive design.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+- **Add Movies**: Create a personalized watchlist.
+- **Mark as Watched**: Keep track of the movies you’ve seen.
+- **Search Movies**: Quickly find movies in your library.
+- **Interactive UI**: Modern and user-friendly interface.
+
+---
+
+## 🎬 Demo
+
+You can try out the live demo of the Movies Watcher application here:  
+[Movies Watcher Demo](https://movies-watcher.vercel.app)
+
+---
+
+## 📂 Repository Structure
+
+```plaintext
+movies-watcher/
+├── public/          # Static assets
+├── src/             # Source code
+│   ├── components/  # Reusable UI components
+│   ├── pages/       # Application pages
+│   ├── styles/      # CSS and styling files
+│   ├── utils/       # Utility functions
+│   └── App.js       # Main application file
+├── Screenshots/     # Folder containing app screenshots
+│   ├── HomePage.jpeg
+│   ├── MoviesPage.jpeg
+│   └── ShowPage.jpeg
+├── package.json     # Project dependencies and scripts
+├── README.md        # Project documentation
+└── .gitignore       # Git ignored files
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Follow these steps to set up the project locally:
 
-## Learn More
+1. **Clone the repository**:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/dola5xd/movies-watcher.git
+   cd movies-watcher
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies:**:
 
-## Deploy on Vercel
+   ```bash
+   npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Run the development server:**:
+
+   ```bash
+   npm run dev
+
+   ```
+
+4. **Open your browser and visit: http://localhost:3000.**
+
+---
+
+## 🖼️ Screenshots
+
+### Home Page
+
+![Home Page](./Screenshots/HomePage.jpeg)
+
+### Movies Page
+
+![Movies Page](./Screenshots/MoviesPage.jpeg)
+
+### Show Page
+
+![Show Page](./Screenshots/ShowPage.jpeg)
+
+---
+
+## 💡 Technologies Used
+
+### Frontend:
+
+- **Next.js**: A React framework for server-side rendering and building scalable web applications.
+- **React**: A JavaScript library for building user interfaces.
+- **React DOM**: Used for DOM rendering in React apps.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Tailwind CSS Animate**: Adds pre-designed animations to Tailwind CSS.
+- **Swiper**: A modern touch slider and framework.
+- **Framer Motion**: For animations and transitions in React.
+- **React Icons**: Popular icons as React components.
+- **React Toastify**: Notifications for React applications.
+- **React Hook Form**: Simplified forms management with validation.
+
+### Backend:
+
+- **Appwrite**: A backend-as-a-service platform for authentication, databases, and storage.
+
+### Development Tools:
+
+- **TypeScript**: For type-safe JavaScript development.
+- **ESLint**: A static code analysis tool to find and fix problems in JavaScript/TypeScript.
+- **PostCSS**: A tool to transform styles using JavaScript plugins.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository.
+
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+
+3. Commit your changes:
+
+```bash
+git commit -m "Add a new feature"
+```
+
+4. Push to the branch:
+
+```bash
+git push origin feature/YourFeature
+```
+
+5. Open a pull request.
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
