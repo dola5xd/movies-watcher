@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { imagesUrl } from "../_lib/constants";
 import { redirect } from "next/navigation";
-import { ShowData } from "../_lib/Api";
+import { ShowData } from "../_types";
 
 function SearchPoster({
   show,
@@ -39,8 +39,8 @@ function SearchPoster({
         className="object-cover rounded-lg -z-10 "
       />
       <div className="z-10 flex flex-col h-full gap-2 pl-2 text-base text-balance ">
-        <h1>{title ? title : name}</h1>
-        <h5 className="flex items-center *:flex *:items-center gap-2">
+        <h2>{title ? title : name}</h2>
+        <h3 className="flex items-center *:flex *:items-center gap-2">
           <span>
             <FaStar fill="#ffd700" className="mr-2" />
             {Number(rating).toFixed(1)}/10
@@ -51,7 +51,7 @@ function SearchPoster({
               ? release_date?.toString().split("-").at(0)
               : first_air_date?.toString().split("-").at(0)}
           </span>
-        </h5>
+        </h3>
       </div>
     </div>
   );

@@ -1,10 +1,8 @@
 "use client";
 import { Autoplay, EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css/effect-cards";
-import { CastData } from "../_lib/Api";
 import CastSlide from "./CastSlide";
+import { CastData } from "../_types";
 
 function CastSlider({ cast }: { cast: CastData[] }) {
   const isMobile =

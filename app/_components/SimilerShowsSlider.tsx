@@ -2,8 +2,7 @@
 import { Autoplay, EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css/effect-cards";
-import { ShowData } from "../_lib/Api";
+import { ShowData } from "../_types";
 import SearchPoster from "@/app/_components/SearchPoster";
 
 function SimilerShowsSlider({ shows }: { shows: ShowData[] }) {

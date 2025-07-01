@@ -10,11 +10,11 @@ function HomeSection({
   className?: string;
 }) {
   return (
-    <section className={className + " my-7"}>
+    <section className={className + "  py-7"}>
       {headH1 && (
-        <h1 className="mb-4 ml-4 text-2xl font-bold md:text-3xl lg:ml-20">
+        <h2 className="mb-4 ml-4 text-2xl font-bold md:text-3xl lg:ml-20">
           {headH1}
-        </h1>
+        </h2>
       )}
       {children}
     </section>

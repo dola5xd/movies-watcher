@@ -7,9 +7,10 @@ import { redirect } from "next/navigation";
 import UserProfile from "./UserProfile";
 import Link from "next/link";
 import { useSession } from "../_context/SessionContext";
+import Loading from "../loading";
 
 function Header() {
-  const { loggedInUser } = useSession();
+  const { loggedInUser, loading } = useSession();
 
   const [openSearch, setSearch] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
@@ -21,8 +22,10 @@ function Header() {
     }
   }, [openSearch, inputRef]);
 
+  if (loading) return <Loading />;
+
   return (
-    <header className="absolute z-50 flex items-center justify-between w-full px-5 pb-5 bg-opacity-25 bg-primery-black-900 md:px-10 pt-7 lg:py-0">
+    <header className="z-20 flex items-center justify-between w-full px-5 pb-5 md:px-10 pt-7 lg:py-0">
       <Logo />
       <div className="flex items-center gap-4 text-3xl lg:flex-row-reverse">
         <IoIosSearch
@@ -34,7 +37,7 @@ function Header() {
         <UserProfile />
         <MobileNav />
 
-        <ul className="py-10 lg:flex gap-4 text-lg hover:[&>li]:-translate-y-1 hover:[&>li]:opacity-75 [&>li]:duration-500 [&>li]:text-nowrap hidden">
+        <ul className="py-10 lg:flex gap-4 text-lg *:hover:-translate-y-1 *:hover:opacity-75 *:duration-500 *:text-nowrap hidden">
           <li>
             <Link href="/">Home</Link>
           </li>
@@ -54,7 +57,7 @@ function Header() {
             <li>
               <Link
                 href="/register"
-                className="px-4 py-1 font-bold rounded bg-primery-green"
+                className="px-4 py-1 font-bold rounded bg-primary-green"
               >
                 Join Us
               </Link>
@@ -63,11 +66,11 @@ function Header() {
         </ul>
       </div>
       {openSearch && (
-        <div className="absolute top-3/4 w-[calc(100%_-_80px)] lg:w-1/3 right-4">
+        <div className="absolute top-3/4 w-[calc(100%-80px)] lg:w-1/3 right-4">
           <input
             type="text"
             placeholder="Search about"
-            className="w-full px-3 py-4 text-base rounded outline-none bg-primery-black-700"
+            className="w-full px-3 py-4 text-base rounded outline-none bg-primary-black-700"
             ref={inputRef}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -86,7 +89,7 @@ function Header() {
                 redirect(`/search?query=${query}`);
               }
             }}
-            className="absolute right-0 h-full px-3 text-base font-bold rounded bg-primery-red text-primery-white"
+            className="absolute right-0 h-full px-3 text-base font-bold rounded bg-primary-red text-primary-white"
           >
             Search
           </button>

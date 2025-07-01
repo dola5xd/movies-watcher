@@ -1,200 +1,277 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { MdLocalMovies } from "react-icons/md";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { CgArrowLeft } from "react-icons/cg";
 import Link from "next/link";
 import { account, ID, uploadAvatar } from "../_lib/appwrite";
 import { useSession } from "../_context/SessionContext";
+import Logo from "../_components/Logo";
+import { FaXmark } from "react-icons/fa6";
+import Loading from "../loading";
+import Spinner from "../_components/Spinner";
 
-type Inputs = {
-  email: string;
-  password: string;
-  name: string;
-  avatar: FileList;
-};
+const schema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  avatar: z.custom<FileList>().refine((file) => file && file.length > 0, {
+    message: "Avatar is required",
+  }),
+});
 
-function Page() {
+type Inputs = z.infer<typeof schema>;
+
+export default function RegisterPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
-  const [message, setMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  } = useForm<Inputs>({ resolver: zodResolver(schema) });
 
   const router = useRouter();
-  const { setLoggedInUser } = useSession();
+  const {
+    loggedInUser,
+    loading: loadingSession,
+    setLoggedInUser,
+  } = useSession();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeAvatar = () => {
+    setAvatarPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const onSubmit = async (data: Inputs) => {
     try {
       setLoading(true);
-
-      // Create user account
       await account.create(ID.unique(), data.email, data.password, data.name);
-
-      // Log the user in
       await account.createEmailPasswordSession(data.email, data.password);
       setLoggedInUser(await account.get());
 
-      // Upload the avatar if it exists
-      if (data.avatar && data.avatar.length > 0) {
-        const avatarFile = data.avatar[0]; // Extract the first file from FileList
-        await uploadAvatar(avatarFile);
+      if (data.avatar?.length > 0) {
+        await uploadAvatar(data.avatar[0]);
       }
 
-      toast.success("Logged in successfully!");
-      router.push("./");
+      toast.success("Registered and logged in!");
+      router.push("/");
     } catch (error) {
-      toast.error((error as Error).message);
-      setMessage((error as Error).message);
+      const msg = (error as Error).message;
+      setMessage(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (loggedInUser && !loadingSession) {
+      router.push("/");
+    }
+  }, [loggedInUser, loadingSession, router]);
+
+  if (loading) return <Loading />;
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen gap-4 pb-10 font-medium bg-primery-black-800 pt-36">
+    <main className="fixed inset-0 flex flex-col items-center justify-center min-h-screen px-6 py-12 gap-y-6 bg-background">
       <Link
-        href={"/"}
-        className="absolute flex items-center gap-2 text-sm top-20 lg:top-10 left-10"
+        href="/"
+        className="flex items-center self-start gap-2 text-base text-primary-grey"
       >
         <CgArrowLeft />
-        Back To Home page
+        Back to Home
       </Link>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full px-10 lg:w-1/2 gap-5 md:px-20 [&>div]:font-bold [&>div]:flex [&>div]:flex-col [&>div]:gap-3 [&>div>input]:bg-transparent [&>div>input]:outline [&>div>input]:outline-2 [&>div>input]:placeholder:text-primery-grey/25 [&>div>input]:outline-primery-grey/25 [&>div>input]:py-2 [&>div>input]:px-4 [&>div>input]:rounded [&>div>input]:text-base [&>div>input]:w-full [&>div>label]:text-base"
-      >
-        <h1 className="text-center text-nowrap">
-          <span className="flex items-center gap-1">
-            <MdLocalMovies />
-            Movies Watcher
-          </span>
-          <p className="text-base text-primery-grey">
-            Join us and create account!
-          </p>
-        </h1>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            autoComplete="off"
-            readOnly
-            onClick={(e) => {
-              const target = e.target as HTMLElement;
-              target.removeAttribute("readOnly");
-            }}
-            {...register("name", {
-              required: "name is required",
-            })}
-            placeholder="name"
-            className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
-              errors.name ? "outline-primery-red" : "outline-primery-grey/25"
-            }`}
-          />
-          {errors.name && (
-            <span className="text-sm text-primery-red">
-              {errors.name.message}
-            </span>
-          )}
+
+      <section className="flex flex-col w-full max-w-6xl overflow-hidden shadow-xl h-fit md:flex-row rounded-xl">
+        <div className="relative w-full md:w-1/2 bg-[url('https://wallpapersok.com/images/high/american-horror-movie-posters-9pvmdtvz4cb0xl37.webp')] bg-cover bg-center before:absolute before:inset-0 before:bg-black/75">
+          <div className="relative z-10 flex flex-col items-center justify-center h-full p-10 space-y-4 text-center text-white">
+            <Logo />
+            <p className="max-w-lg text-base text-gray-300">
+              Join Movie Watcher and discover a world of cinema. Watch, rate,
+              and share your favorite movies — all in one place.
+            </p>
+          </div>
         </div>
-        <div>
-          <label htmlFor="Email">Email</label>
-          <input
-            type="email"
-            autoComplete="off"
-            readOnly
-            onClick={(e) => {
-              const target = e.target as HTMLElement;
-              target.removeAttribute("readOnly");
-            }}
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email address",
-              },
-            })}
-            placeholder="Email"
-            className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
-              errors.email ? "outline-primery-red" : "outline-primery-grey/25"
-            }`}
-          />
-          {errors.email && (
-            <span className="text-sm text-primery-red">
-              {errors.email.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="avatar">Profile Image</label>
-          <input
-            type="file"
-            autoComplete="off"
-            readOnly
-            onClick={(e) => {
-              const target = e.target as HTMLElement;
-              target.removeAttribute("readOnly");
-            }}
-            {...register("avatar", { required: "avatar is required" })}
-            placeholder="avatar"
-            className={`bg-transparent outline outline-1 py-2 px-4 rounded w-full file:py-1 file:px-2 file:bg-transparent text-xs file:border file:border-primery-grey file:mr-2 file:text-primery-white ${
-              errors.avatar ? "outline-primery-red" : "outline-primery-grey/25"
-            }`}
-          />
-          {errors.avatar && (
-            <span className="text-sm text-primery-red">
-              {errors.avatar.message}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            autoComplete="off"
-            readOnly
-            onClick={(e) => {
-              const target = e.target as HTMLElement;
-              target.removeAttribute("readOnly");
-            }}
-            {...register("password", {
-              required: "Password is required",
-            })}
-            placeholder="Password"
-            className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
-              errors.password
-                ? "outline-primery-red"
-                : "outline-primery-grey/25"
-            }`}
-          />
-          {errors.password && (
-            <span className="text-sm text-primery-red">
-              {errors.password.message}
-            </span>
-          )}
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:bg-black text-primery-grey disabled:cursor-not-allowed"
-        >
-          {" "}
-          {loading ? "Register..." : "Register!"}
-        </button>
-        {message && <p className="text-sm text-primery-red">{message}</p>}
-        <p className="text-base text-center text-primery-grey">
-          Alerady have account?{" "}
-          <Link href={"/login"} className="underline text-primery-white">
-            Login now!
-          </Link>
-        </p>
-      </form>
+        {loading ? (
+          <div className="flex items-center justify-center w-1/2 h-full">
+            <Spinner className="w-10 h-10" />
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col justify-center w-full p-10 space-y-6 md:w-1/2 bg-primary-black-800/25"
+          >
+            <div className="space-y-1 text-center">
+              <h3 className="text-2xl font-semibold text-white">
+                Let’s start your journey
+              </h3>
+              <p className="text-base text-primary-grey">
+                Create your account now
+              </p>
+            </div>
+
+            <div>
+              <label
+                htmlFor="name"
+                className="block mb-1 text-sm font-medium text-white"
+              >
+                Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                autoComplete="off"
+                {...register("name")}
+                placeholder="Your name"
+                className={`w-full bg-[#222] text-base px-4 py-2 rounded text-white border ${
+                  errors.name ? "border-primary-red" : "border-[#444]"
+                }`}
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-primary-red">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block mb-1 text-sm font-medium text-white"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="off"
+                {...register("email")}
+                placeholder="you@example.com"
+                className={`w-full bg-[#222] text-base px-4 py-2 rounded text-white border ${
+                  errors.email ? "border-primary-red" : "border-[#444]"
+                }`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-primary-red">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-y-4">
+              <label className="block mb-1 text-sm font-medium text-white">
+                Profile Image
+              </label>
+              <div className="flex items-center gap-4">
+                {avatarPreview && (
+                  <div className="relative flex items-center gap-4 mb-3">
+                    <img
+                      src={avatarPreview}
+                      alt="Avatar Preview"
+                      className="object-cover w-16 h-16 border rounded-full border-primary-grey"
+                    />
+                    <button
+                      title="remove image"
+                      type="button"
+                      onClick={removeAvatar}
+                      className="absolute top-0 text-base underline cursor-pointer right-full text-primary-red"
+                    >
+                      <FaXmark />
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-4 py-2 text-sm text-white border rounded bg-[#222] border-primary-red hover:bg-primary-red transition cursor-pointer"
+                >
+                  {avatarPreview ? "Change Avatar" : "Upload Avatar"}
+                </button>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                autoComplete="off"
+                hidden
+                {...register("avatar")}
+                onChange={(e) => {
+                  handleAvatarChange(e);
+                }}
+                ref={(e) => {
+                  register("avatar").ref(e);
+                  fileInputRef.current = e;
+                }}
+              />
+
+              {errors.avatar && (
+                <p className="mt-1 text-sm text-primary-red">
+                  {errors.avatar.message as string}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block mb-1 text-sm font-medium text-white"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                {...register("password")}
+                placeholder="••••••••"
+                className={`w-full bg-[#222] text-base px-4 py-2 rounded text-white border ${
+                  errors.password ? "border-primary-red" : "border-[#444]"
+                }`}
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-primary-red">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 text-base font-semibold text-white transition rounded bg-primary-red hover:bg-primary-red/75 disabled:opacity-50"
+            >
+              {loading ? "Registering..." : "Register"}
+            </button>
+
+            {message && (
+              <p className="text-sm text-center text-primary-red">{message}</p>
+            )}
+
+            <p className="text-sm text-center text-primary-grey">
+              Already have an account?{" "}
+              <Link href="/login" className="text-white underline">
+                Login
+              </Link>
+            </p>
+          </form>
+        )}
+      </section>
     </main>
   );
 }
-
-export default Page;

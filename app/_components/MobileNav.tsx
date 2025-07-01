@@ -13,7 +13,7 @@ function MobileNav() {
   return (
     <>
       <BiMenu
-        className="duration-500 cursor-pointer hover:scale-110 hover:text-primery-red lg:hidden"
+        className="duration-500 cursor-pointer hover:scale-110 hover:text-primary-red lg:hidden"
         onClick={() => setMenu((prev) => !prev)}
       />
 
@@ -24,10 +24,10 @@ function MobileNav() {
           opacity: menu ? 1 : 0,
         }}
         transition={{ width: { duration: 0.5 } }}
-        className="fixed top-0 right-0 z-50 flex-col hidden w-1/2 min-h-screen p-5 overflow-hidden bg-primery-black-700 lg:hidden"
+        className="fixed top-0 right-0 z-50 flex-col hidden w-1/2 min-h-screen p-5 overflow-hidden bg-primary-black-700 lg:hidden"
       >
         <span
-          className="flex justify-end w-full text-3xl duration-500 cursor-pointer hover:text-primery-red"
+          className="flex justify-end w-full text-3xl duration-500 cursor-pointer hover:text-primary-red"
           onClick={() => setMenu(false)}
         >
           <CgClose />
@@ -51,10 +51,10 @@ function MobileNav() {
 
           {!loggedInUser && (
             <li className="flex items-center flex-wrap justify-center gap-2 [&>a]:w-full [&>a]:px-4 [&>a]:py-1 [&>a]:rounded [&>a]:text-center">
-              <Link href="/login" className="bg-primery-green">
+              <Link href="/login" className="bg-primary-green">
                 Login
               </Link>
-              <Link href="/register" className="border border-primery-grey">
+              <Link href="/register" className="border border-primary-grey">
                 Register
               </Link>
             </li>

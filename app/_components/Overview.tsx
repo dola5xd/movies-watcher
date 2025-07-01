@@ -10,16 +10,16 @@ function Overview({ overview }: { overview: string }) {
     window.matchMedia("(max-width: 1000px)").matches;
   if (!overview)
     return (
-      <h1 className="text-sm text-primery-grey">No overview for this show!</h1>
+      <h2 className="text-sm text-primary-grey">No overview for this show!</h2>
     );
 
   return (
-    <p className="text-base leading-relaxed text-primery-grey p-7">
+    <p className="text-base leading-relaxed text-primary-grey p-7">
       {isSmallScreen ? overviewText : overview}
       {isSmallScreen && (
         <span
           onClick={() => setShortOverview((prev) => !prev)}
-          className="underline cursor-pointer text-primery-green"
+          className="underline cursor-pointer text-primary-green"
         >
           {short ? "More" : " Less"}
         </span>

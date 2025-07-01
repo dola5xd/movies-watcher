@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CastData } from "../_lib/Api";
+import { CastData } from "../_types";
 
 const CastSlide: React.FC<CastData> = ({ name, character, profile_path }) => {
   return (
@@ -15,7 +15,7 @@ const CastSlide: React.FC<CastData> = ({ name, character, profile_path }) => {
       </span>
       <span className="flex flex-col gap-2 text-nowrap">
         <h3 className="text-sm">{name}</h3>
-        <h5 className="text-xs text-primery-grey">{character}</h5>
+        <h4 className="text-xs text-primary-grey">{character}</h4>
       </span>
     </div>
   );

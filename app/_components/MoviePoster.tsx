@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { imagesUrl } from "../_lib/constants";
 import { redirect } from "next/navigation";
-import { ShowData } from "../_lib/Api";
+import { ShowData } from "../_types";
 
 function MoviePoster({
   show,
@@ -24,7 +24,7 @@ function MoviePoster({
 
   return (
     <div
-      className="relative flex flex-col min-h-[350px] aspect-[4/7] sm:aspect-[4/5] md:aspect-[4/7] lg:min-h-[200px] rounded-lg before-overlay justify-end content-end pb-4 hover:before:bg-opacity-0 duration-500 lg:before:bg-opacity-60"
+      className="relative flex flex-col min-h-[350px] aspect-[4/7] sm:aspect-[4/5] md:aspect-[2/3] lg:min-h-[200px] rounded-lg before-overlay justify-end content-end pb-4 hover:before:bg-black/25 duration-500 "
       onClick={() => redirect(first_air_date ? `tv/${id}` : `movie/${id}`)}
     >
       <Image
@@ -34,12 +34,15 @@ function MoviePoster({
             : "http://image.tmdb.org/t/p/w500" + poster
         }
         fill
+        quality={fullQuality ? 75 : 50}
         alt={title ? String(title) : String(name) + " poster"}
         className="object-cover rounded-lg -z-10 "
       />
-      <div className="z-10 flex flex-col min-h-[350px] gap-2 pl-2 text-base sm:text-2xl lg:text-lg justify-end">
-        <h1>{title ? title : name}</h1>
-        <h5 className="flex items-center *:flex *:items-center gap-2">
+      <div className="z-10 flex flex-col justify-end h-full gap-2 pl-2">
+        <h2 className="text-xl font-bold lg:text-2xl text-balance">
+          {title ? title : name}
+        </h2>
+        <h3 className="flex items-center *:flex *:items-center gap-2 text-base">
           <span>
             <FaStar fill="#ffd700" className="mr-2" />
             {Number(rating).toFixed(1)}/10
@@ -50,7 +53,7 @@ function MoviePoster({
               ? release_date?.toString().split("-").at(0)
               : first_air_date?.toString().split("-").at(0)}
           </span>
-        </h5>
+        </h3>
       </div>
     </div>
   );

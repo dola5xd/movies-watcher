@@ -45,31 +45,43 @@ export async function uploadAvatar(file: File) {
 
 export async function updateUserData(
   name: string,
-  avatar: FileList,
+  avatar: FileList | undefined,
   previousAvatarId: string | null
 ) {
   try {
-    // Update user name
-    await account.updateName(name); // Upload the new avatar if provided
+    // Always update the name
+    await account.updateName(name);
+
+    // If a new avatar is uploaded
     if (avatar && avatar.length > 0) {
-      // Delete the previous avatar if it exists
+      // Delete previous avatar if exists
       if (previousAvatarId) {
         try {
           await storage.deleteFile(bucketID, previousAvatarId);
         } catch (error) {
-          console.error("Error deleting previous avatar:", error);
+          console.error("Failed to delete old avatar:", error);
         }
       }
+
+      // Upload new avatar
+      const file = avatar[0];
+      const response = await storage.createFile(bucketID, ID.unique(), file);
+
+      const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${response.$id}/view?project=${projectID}`;
+
+      // Get current preferences and update avatar info
+      const prefs = await account.getPrefs();
+      await account.updatePrefs({
+        ...prefs,
+        avatar: fileUrl,
+        avatarId: response.$id,
+      });
     }
-    const file = avatar[0];
-    const response = await storage.createFile(bucketID, ID.unique(), file); // Get the file URL
-    const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${response.$id}/view?project=${projectID}`;
-    const prefs = await account.getPrefs(); // Update the user's profile with the avatar URL
-    await account.updatePrefs({ ...prefs, avatar: fileUrl }); // Store the new avatar file ID in the user's preferences
-    await account.updatePrefs({ ...prefs, avatarId: response.$id });
-    console.log("User data updated successfully");
+
+    console.log("✅ User data updated successfully.");
   } catch (error) {
-    console.error("Error updating user data:", error);
+    console.error("❌ Failed to update user data:", error);
+    throw error;
   }
 }
 

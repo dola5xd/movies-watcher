@@ -1,19 +1,32 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "react-toastify/dist/ReactToastify.css";
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/effect-cards";
+@import "swiper/css/effect-cards";
+
+@theme {
+  --color-background: #1e1e1e;
+  --color-primary-black-700: #28262d;
+  --color-primary-black-800: #0d0c0f;
+  --color-primary-black-900: #08080a;
+  --color-primary-grey: #9ca4ab;
+  --color-primary-white: #ffffff;
+  --color-primary-red: #eb3f5e;
+  --color-primary-green: #00925d;
+}
 
 body {
   font-size: 1.5rem;
 }
 
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 8px;
-  background-color: #08080a;
-  border: 1px solid #1e1e1e;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -23,6 +36,10 @@ body {
   background-color: #eb3f5e;
 }
 
+/* Swiper Styling */
+.homeSlide {
+  display: flex;
+}
 .swiper-pagination {
   z-index: 21;
 }
@@ -32,18 +49,20 @@ body {
   opacity: 1;
   width: 15px;
   height: 15px;
-  scale: 0.7;
+  transform: scale(0.7);
 }
+
 .swiper-pagination-bullet-active {
   background-color: white;
-  scale: 1.2;
+  transform: scale(1.2);
 }
 
 @layer components {
   .overlay {
-    @apply absolute bottom-0 left-0 w-full h-16 z-20 bg-black bg-opacity-25;
+    @apply absolute bottom-0 left-0 z-20 w-full h-16 opacity-25;
   }
+
   .before-overlay {
-    @apply before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-full before:bg-black before:bg-opacity-30 before:duration-500;
+    @apply before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-full before:bg-black/50 before:duration-500;
   }
 }

@@ -4,7 +4,6 @@ import { searchShowByName } from "../_lib/Api";
 
 import type { Metadata } from "next";
 import Loading from "../loading";
-import Header from "../_components/Header";
 
 export async function generateMetadata({
   searchParams,
@@ -30,9 +29,8 @@ async function page({
   );
   return (
     <>
-      <Header />
       <section className="pt-24">
-        <h1 className="px-4 pt-10 md:px-24">{`${data.length} Results for ' ${query} '`}</h1>
+        <h2 className="px-4 pt-10 md:px-24">{`${data.length} Results for ' ${query} '`}</h2>
         <Suspense fallback={<Loading />}>
           {data.length > 0 ? (
             <div className="flex flex-wrap items-center justify-center gap-4 px-5 py-7 md:gap-10">
@@ -41,12 +39,12 @@ async function page({
               ))}
             </div>
           ) : (
-            <h3 className="px-4 text-base text-primery-grey py-7">
+            <h3 className="px-4 text-base text-primary-grey py-7">
               Sorry! there is 0 result for your searched show!
             </h3>
           )}
         </Suspense>
-      </section>{" "}
+      </section>
     </>
   );
 }

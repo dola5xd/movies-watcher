@@ -1,41 +1,67 @@
 "use client";
 
-import Header from "../_components/Header";
 import { useSession } from "../_context/SessionContext";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { account, updateUserData } from "../_lib/appwrite";
+import { useEffect, useState } from "react";
 
-type Inputs = {
-  email: string;
-  name: string;
-  avatar: FileList;
-  phone: string;
-};
+// ✅ Zod Schema
+const schema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email(),
+  phone: z.string().optional(),
+  avatar: z
+    .custom<FileList>()
+    .refine((files) => files instanceof FileList, {
+      message: "Avatar must be a file upload",
+    })
+    .optional(),
+});
+
+type Inputs = z.infer<typeof schema>;
 
 function Page() {
   const { loggedInUser, setLoggedInUser } = useSession();
+  const router = useRouter();
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Inputs>({
+    resolver: zodResolver(schema),
     defaultValues: {
-      name: String(loggedInUser?.name),
-      phone: String(loggedInUser?.phone),
-      email: String(loggedInUser?.email),
+      name: loggedInUser?.name || "",
+      email: loggedInUser?.email || "",
+      phone: loggedInUser?.phone || "",
     },
   });
-  const router = useRouter();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const avatarWatch = watch("avatar");
+  useEffect(() => {
+    const file = avatarWatch?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  }, [avatarWatch]);
+
+  const onSubmit = async (data: Inputs) => {
     try {
       const previousAvatarId = loggedInUser?.prefs?.avatarId || null;
-      await updateUserData(data.name, data.avatar, previousAvatarId);
-      setLoggedInUser(await account.get());
+      const avatar = data.avatar || undefined;
 
-      toast.success("User data updated successfully!");
+      await updateUserData(data.name, avatar, previousAvatarId);
+      setLoggedInUser(await account.get());
+      toast.success("Profile updated successfully!");
       router.push("./");
     } catch (error) {
       toast.error((error as Error).message);
@@ -43,80 +69,116 @@ function Page() {
   };
 
   return (
-    <>
-      <Header />
-      <main className="px-5 pt-28 md:px-20">
-        <h1>🙋‍♂️ Hi! {String(loggedInUser?.name)}</h1>
-        <h3 className="text-center mt-7">Let&apos;s edit your profile!</h3>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="px-7 md:px-7 bg-primery-black-700 py-10 md:py-7 rounded-lg mt-3 flex flex-col gap-5 [&>div>input]:bg-primery-black-800 [&>div>input:disabled]:bg-primery-black-900 [&>div>input:disabled]:text-primery-grey [&>div>input:disabled]:cursor-not-allowed "
-        >
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name">Username</label>
+    <main className="flex items-center justify-center px-4 py-10 text-white">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-[#181818] p-8 rounded-xl border border-[#2a2a2a] shadow-xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+          <h2 className="mb-1 text-2xl font-bold">
+            👋 Hello, {loggedInUser?.name || "User"}
+          </h2>
+          <p className="mb-4 text-sm text-gray-400">
+            Update your profile information
+          </p>
+
+          <div>
+            <label htmlFor="name" className="block mb-1 text-sm font-medium">
+              Name
+            </label>
             <input
+              id="name"
               type="text"
-              {...register("name", {
-                required: "Name is required",
-              })}
-              placeholder="Name"
-              className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
-                errors.name ? "outline-primery-red" : "outline-primery-grey/25"
-              }`}
+              {...register("name")}
+              className={`w-full bg-[#222] text-base border rounded px-4 py-2 outline-none transition focus:ring-1 ${
+                errors.name ? "border-primary-red" : "border-gray-600"
+              } focus:border-primary-red focus:ring-primary-red`}
+              placeholder="Your name"
             />
             {errors.name && (
-              <span className="text-sm text-primery-red">
+              <p className="mt-1 text-sm text-primary-red">
                 {errors.name.message}
-              </span>
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="Email">Email</label>
+            <label htmlFor="email" className="block mb-1 text-sm font-medium">
+              Email
+            </label>
             <input
+              id="email"
               type="email"
-              {...register("email", {
-                required: "Email is required",
-                disabled: true,
-              })}
-              placeholder="Email"
-              className={`bg-transparent outline outline-1 py-2 px-4 rounded text-base w-full ${
-                errors.email ? "outline-primery-red" : "outline-primery-grey/25"
-              }`}
+              {...register("email")}
+              disabled
+              className="w-full bg-[#2a2a2a] text-base border border-gray-600 text-gray-400 rounded px-4 py-2 cursor-not-allowed"
             />
-            {errors.email && (
-              <span className="text-sm text-primery-red">
-                {errors.email.message}
-              </span>
-            )}
           </div>
+
           <div>
-            <label htmlFor="avatar">Profile Image</label>
+            <label htmlFor="phone" className="block mb-1 text-sm font-medium">
+              Phone
+            </label>
             <input
-              type="file"
-              {...register("avatar")}
-              placeholder="avatar"
-              className={`bg-transparent outline outline-1 py-2 px-4 rounded w-full file:py-1 file:px-2 file:bg-transparent text-xs file:border file:border-primery-grey file:text-primery-white ${
-                errors.avatar
-                  ? "outline-primery-red"
-                  : "outline-primery-grey/25"
-              }`}
+              id="phone"
+              type="text"
+              {...register("phone")}
+              className={`w-full bg-[#222] text-base border rounded px-4 py-2 outline-none transition focus:ring-1 ${
+                errors.phone ? "border-primary-red" : "border-gray-600"
+              } focus:border-primary-red focus:ring-primary-red`}
+              placeholder="Phone (optional)"
             />
-            {errors.avatar && (
-              <span className="text-sm text-primery-red">
-                {errors.avatar.message}
-              </span>
+            {errors.phone && (
+              <p className="mt-1 text-sm text-primary-red">
+                {errors.phone.message}
+              </p>
             )}
           </div>
+
+          <input
+            id="avatar"
+            type="file"
+            accept="image/*"
+            {...register("avatar")}
+            className="hidden"
+          />
+
           <button
             type="submit"
-            className="py-3 text-lg font-bold duration-500 border border-white rounded bg-primery-black/90 hover:border-primery-red hover:text-primery-red text-primery-grey"
+            className="py-2 mt-4 text-base font-semibold text-black transition duration-500 bg-white rounded cursor-pointer hover:bg-gray-200"
           >
-            Update
+            Save Changes
           </button>
         </form>
-      </main>
-    </>
+
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <label
+            htmlFor="avatar"
+            className="relative w-40 h-40 overflow-hidden transition border-2 border-gray-700 rounded-full cursor-pointer group hover:border-primary-red"
+          >
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="Avatar Preview"
+                className="object-cover object-top w-full h-full"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full text-sm text-gray-500 bg-gray-800">
+                Click to upload
+              </div>
+            )}
+            <div className="absolute inset-0 flex items-center justify-center text-sm font-semibold transition bg-black opacity-0 bg-opacity-40 group-hover:opacity-100 text-primary-red">
+              Change
+            </div>
+          </label>
+          <p className="max-w-xs text-sm text-gray-400">
+            Tap the image to upload a new profile picture.
+          </p>
+          {errors.avatar && (
+            <p className="mt-1 text-sm text-primary-red">
+              {errors.avatar.message as string}
+            </p>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
 

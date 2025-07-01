@@ -5,7 +5,7 @@ import { PAGE_SIZE } from "../_lib/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import PaginationButton from "./PaginationButton";
 
-function Pagination({ total: pageNumber }: { total: number }) {
+function Pagination({ total: totalPages }: { total: number }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const params = new URLSearchParams(searchParams);
@@ -14,48 +14,86 @@ function Pagination({ total: pageNumber }: { total: number }) {
     ? 1
     : Number(searchParams.get("page"));
 
-  const pageCount = pageNumber;
+  const pageCount = totalPages;
 
-  function nextPage() {
-    const next = currentPage === pageCount ? currentPage : currentPage + 1;
-
-    params.set("page", String(next));
+  function goToPage(page: number) {
+    params.set("page", String(page));
     router.push(`?${params.toString()}`);
   }
 
-  function prevPage() {
-    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+  function nextPage() {
+    if (currentPage < pageCount) goToPage(currentPage + 1);
+  }
 
-    params.set("page", String(prev));
-    router.push(`?${params.toString()}`);
+  function prevPage() {
+    if (currentPage > 1) goToPage(currentPage - 1);
   }
 
   if (pageCount <= 1) return null;
 
+  // Generate visible page numbers (e.g., [2, 3, 4, 5, 6])
+  const getPageNumbers = () => {
+    const pages: number[] = [];
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = start + maxVisible - 1;
+
+    if (end > pageCount) {
+      end = pageCount;
+      start = Math.max(1, end - maxVisible + 1);
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
   return (
-    <div className="flex flex-col-reverse items-center justify-between w-full md:flex-row gap-y-5 py-7">
-      <p className="ml-[0.8rem] [&>span]:font-semibold text-sm">
+    <div className="flex flex-col-reverse items-center justify-center w-full md:flex- gap-y-5 py-7">
+      <p className="ml-[0.8rem] [&>span]:font-semibold text-sm lg:text-base">
         Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
         <span>
           {currentPage === pageCount
-            ? pageNumber * PAGE_SIZE
+            ? totalPages * PAGE_SIZE
             : currentPage * PAGE_SIZE}
         </span>{" "}
-        of <span>{pageNumber * PAGE_SIZE}</span> results
+        of <span>{totalPages * PAGE_SIZE}</span> results
       </p>
 
-      <div className="flex gap-2">
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <HiChevronLeft /> <span>Previous</span>
-        </PaginationButton>
+      <div className="flex items-center gap-2">
+        <button
+          title="previous page"
+          type="button"
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="px-3 py-3 duration-500 rounded cursor-pointer outline-2 outline-primary-red hover:bg-primary-red"
+        >
+          <HiChevronLeft />
+        </button>
 
-        <PaginationButton
+        {getPageNumbers().map((page) => (
+          <PaginationButton
+            key={page}
+            onClick={() => goToPage(page)}
+            className={`${
+              currentPage === page ? "bg-primary-red" : "black-800k"
+            } border border-gray-300 `}
+          >
+            {page}
+          </PaginationButton>
+        ))}
+
+        <button
+          title="next page"
+          type="button"
           onClick={nextPage}
           disabled={currentPage === pageCount}
+          className="px-3 py-3 duration-500 rounded cursor-pointer outline-2 outline-primary-red hover:bg-primary-red "
         >
-          <span>Next</span>
           <HiChevronRight />
-        </PaginationButton>
+        </button>
       </div>
     </div>
   );

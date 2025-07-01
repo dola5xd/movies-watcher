@@ -65,7 +65,7 @@ function ActionBtns({ type, id }: { type: string; id: number }) {
     <div className="flex flex-wrap items-center gap-3 py-2">
       <Link href={link} target="_blank">
         <button
-          className="bg-primery-green text-base px-5 py-2 rounded hover:bg-opacity-90 duration-500 flex items-center gap-2 hover:w-full [&>span]:hidden [&>span]:hover:inline"
+          className="bg-primary-green text-base px-5 py-2 rounded hover:bg-opacity-90 duration-500 flex items-center gap-2 hover:w-full [&>span]:hidden [&>span]:hover:inline"
           title="Watch show"
         >
           <FaPlay className="min-w-[10px]" />
@@ -73,7 +73,7 @@ function ActionBtns({ type, id }: { type: string; id: number }) {
         </button>
       </Link>
       <button
-        className="bg-primery-red py-2 px-2 text-black rounded duration-500 [&>svg]:stroke-black hover:[&>svg]:fill-black"
+        className="bg-primary-red py-2 px-2 text-black rounded duration-500 [&>svg]:stroke-black hover:[&>svg]:fill-black"
         name="bookmarkButton"
         title="Bookmark show!"
         onClick={bookmark}

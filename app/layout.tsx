@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import { ToastContainer } from "react-toastify";
-
-import "react-toastify/dist/ReactToastify.css";
-import "swiper/css";
-import "swiper/css/pagination";
 import "./_styles/globals.css";
 import { SessionProvider } from "./_context/SessionContext";
+import Header from "./_components/Header";
+import Footer from "./_components/Footer";
 
 const cairoFont = Cairo({
   subsets: ["latin"],
@@ -27,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cairoFont.className} min-h-screen relative bg-background text-primery-white antialiased`}
+        className={`${cairoFont.className} min-h-screen relative bg-background text-primary-white antialiased`}
       >
         <SessionProvider>
+          <Header />
+
           {children}
           <ToastContainer
             position="bottom-right"
@@ -44,6 +44,7 @@ export default function RootLayout({
             theme="dark"
             className={"text-xs text-nowrap font-bold px-4"}
           />
+          <Footer />
         </SessionProvider>
       </body>
     </html>

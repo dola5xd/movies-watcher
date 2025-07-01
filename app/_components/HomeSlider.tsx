@@ -1,24 +1,32 @@
 "use client";
 import { Autoplay, Pagination } from "swiper/modules";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import { ShowData } from "../_lib/Api";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { imagesUrl } from "../_lib/constants";
+import { ShowData } from "../_types";
+import { useEffect, useState } from "react";
 
-function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 767px)").matches;
+function HomeSlider({ data }: { data: ShowData[] | undefined }) {
+  const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    setIsMobile(media.matches);
+    const handler = () => setIsMobile(media.matches);
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
+  }, []);
+
   return (
     <Swiper
       modules={[Autoplay, Pagination]}
       slidesPerView={isMobile ? 1 : 2}
       loop={true}
       spaceBetween={30}
-      centeredSlides={true}
+      centeredSlides
       autoplay={{
         delay: 5000,
         disableOnInteraction: false,
@@ -27,31 +35,35 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
         enabled: isMobile,
         clickable: true,
       }}
-      className="relative top-0 left-0 lg:top-10 mySwiper "
+      className="relative"
       grabCursor
     >
       {data?.map((value) => (
         <SwiperSlide
           key={value.id}
-          className="min-h-[350px] md:min-h-[450px] relative flex flex-col before-overlay justify-end pb-10 md:pb-5 pl-4 "
-          onClick={() =>
-            redirect(
-              value.first_air_date ? `tv/${value.id}` : `movie/${value.id}`
-            )
-          }
+          className="min-h-[350px] md:min-h-[450px] relative flex flex-col before-overlay justify-end pb-10 md:pb-5 pl-4 homeSlide"
+          onClick={() => {
+            const path = value.first_air_date
+              ? `/tv/${value.id}`
+              : `/movie/${value.id}`;
+            router.push(path);
+          }}
         >
           <Image
             src={imagesUrl + value.backdrop_path}
             fill
-            quality={100}
+            quality={75}
             alt={
               value.title ? String(value.title) : String(value.name) + " poster"
             }
-            className="object-cover rounded-lg -z-10 "
+            className="object-cover rounded-lg -z-10"
           />
-          <div className="z-10 flex flex-col h-full gap-2 pl-2 text-base">
-            <h1>{value.title ? value.title : value.name}</h1>
-            <h5 className="flex items-center *:flex *:items-center gap-2">
+
+          <div className="z-10 flex flex-col h-full gap-2 pl-2">
+            <h2 className="text-xl">
+              {value.title ? value.title : value.name}
+            </h2>
+            <h3 className="flex items-center *:flex *:items-center gap-2 text-base">
               <span>
                 <FaStar fill="#ffd700" className="mr-2" />
                 {Number(value.vote_average).toFixed(1)}/10
@@ -62,7 +74,7 @@ function HomeSlider({ data }: { data?: ShowData[] | undefined }) {
                   ? value.release_date?.toString().split("-").at(0)
                   : value.first_air_date?.toString().split("-").at(0)}
               </span>
-            </h5>
+            </h3>
           </div>
         </SwiperSlide>
       ))}

@@ -1,52 +1,38 @@
 "use client";
-import { componies } from "../_lib/constants";
-import CompaniesSlide from "./CompaniesSlide";
+
 import { motion } from "framer-motion";
+import CompaniesSlide from "./CompaniesSlide";
+import { componies } from "../_lib/constants";
+import { useEffect, useState } from "react";
 
 function CompaniesSlider() {
-  const isSmallScreen =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 1000px)").matches;
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  // Track screen size for responsiveness
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1000px)");
+    const update = () => setIsSmallScreen(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  // Combine companies twice for infinite loop illusion
+  const allCompanies = [...componies, ...componies, ...componies];
+
   return (
-    <div className="w-full inline-flex flex-nowrap overflow-hidden gap-[700px] py-10 pr-[50px] lg:pt-20">
+    <div className="relative w-full overflow-x-hidden p-10">
       <motion.div
-        className="flex items-center justify-between w-full gap-7 px-7 lg:px-20"
-        variants={{
-          animate: { x: isSmallScreen ? "-412%" : "0" },
-          init: { x: 0 },
-        }}
-        animate="animate"
-        initial="init"
+        className="flex gap-16 w-max"
+        animate={{ x: ["0%", "-33.3%"] }}
         transition={{
           repeat: Infinity,
           ease: "linear",
-          duration: 10,
-          repeatDelay: 0,
-          repeatType: "loop",
+          duration: isSmallScreen ? 15 : 25,
         }}
       >
-        {componies.map((company) => (
-          <CompaniesSlide company={company} key={company.name} />
-        ))}
-      </motion.div>
-      <motion.div
-        className="flex items-center justify-between w-full gap-7 px-7 lg:hidden"
-        variants={{
-          animate: { x: "-412%" },
-          init: { x: 0 },
-        }}
-        animate="animate"
-        initial="init"
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: 10,
-          repeatDelay: 0,
-          repeatType: "loop",
-        }}
-      >
-        {componies.map((company) => (
-          <CompaniesSlide company={company} key={company.name} />
+        {allCompanies.map((company, index) => (
+          <CompaniesSlide key={`${company.name}-${index}`} company={company} />
         ))}
       </motion.div>
     </div>

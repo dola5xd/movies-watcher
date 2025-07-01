@@ -1,4 +1,3 @@
-import Header from "../_components/Header";
 import SearchPoster from "../_components/SearchPoster";
 import Pagination from "../_components/Pagination";
 import { getAnimePages } from "../_lib/Api";
@@ -14,21 +13,18 @@ async function Page({
   const moviesData = await getAnimePages(Number(currentPage));
   const { results: data, total_pages } = moviesData!;
   return (
-    <>
-      <Header />
-      <main className="w-full pt-28 px-7 lg:pt-32">
-        <h1 className="font-bold md:px-24">Anime</h1>
-        <div className="flex flex-wrap items-center justify-center gap-4 gap-y-7 md:gap-7 py-7 md:py-4">
-          {data?.map(
-            (show) =>
-              show.poster_path && (
-                <SearchPoster show={show} key={show.id} fullQuality={false} />
-              )
-          )}{" "}
-        </div>
-        <Pagination total={total_pages} />
-      </main>
-    </>
+    <main className="flex flex-col w-full px-20 gap-y-4">
+      <h2 className="text-2xl font-bold">Anime</h2>
+      <div className="flex flex-wrap items-center gap-4 gap-y-7 md:gap-7">
+        {data?.map(
+          (show) =>
+            show.poster_path && (
+              <SearchPoster show={show} key={show.id} fullQuality={false} />
+            )
+        )}{" "}
+      </div>
+      <Pagination total={total_pages} />
+    </main>
   );
 }
 

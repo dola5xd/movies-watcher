@@ -56,6 +56,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizePackageImports: ["swiper"],
+  },
 };
 
 export default nextConfig;

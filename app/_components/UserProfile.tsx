@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { RxAvatar } from "react-icons/rx";
+import Loading from "../loading";
 
 function UserProfile() {
-  const { loggedInUser, setLoggedInUser } = useSession();
+  const { loggedInUser, setLoggedInUser, loading } = useSession();
 
   const navigate = useRouter();
 
@@ -18,6 +19,9 @@ function UserProfile() {
   };
 
   const [menu, setMenu] = useState<boolean>(false);
+
+  if (loading) return <Loading />;
+
   return (
     <>
       <span
@@ -48,8 +52,8 @@ function UserProfile() {
         )}
       </span>
       {menu && loggedInUser && (
-        <ul className="absolute bg-black top-20 py-2 min-w-[150px] text-sm font-bold rounded flex flex-col text-center gap-2 [&>li]:py-4 [&>li]:px-4 -translate-x-5">
-          <li className="flex flex-col items-center gap-2 border-b border-primery-grey">
+        <ul className="absolute bg-black top-20 py-2 min-w-[150px] text-sm font-bold rounded flex flex-col text-center gap-2 [&>li]:py-4 [&>li]:px-4 -translate-x-5 z-20">
+          <li className="flex flex-col items-center gap-2 border-b border-primary-grey">
             <Image
               src={
                 !loggedInUser.prefs.avatarId && loggedInUser.prefs.avatar
@@ -66,10 +70,10 @@ function UserProfile() {
             />
             <span>Hello {loggedInUser && loggedInUser.name}!</span>
           </li>
-          <li className="border-b cursor-pointer border-primery-grey">
+          <li className="border-b cursor-pointer border-primary-grey">
             <Link href={"/settings"}>Settings</Link>
           </li>
-          <li className="cursor-pointer text-primery-red" onClick={logout}>
+          <li className="cursor-pointer text-primary-red" onClick={logout}>
             Logout
           </li>
         </ul>

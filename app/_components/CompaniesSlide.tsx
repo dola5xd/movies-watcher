@@ -12,7 +12,7 @@ function CompaniesSlide({
       alt={name}
       height={100}
       width={100}
-      className="object-cover"
+      className="object-contain object-center"
     />
   );
 }

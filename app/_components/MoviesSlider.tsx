@@ -2,9 +2,7 @@
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import MoviePoster from "./MoviePoster";
-
-import "swiper/css/effect-cards";
-import { ShowData } from "../_lib/Api";
+import { ShowData } from "../_types";
 
 function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
   const isMobile =
@@ -21,7 +19,9 @@ function MoviesSlider({ data }: { data?: ShowData[] | undefined }) {
       spaceBetween={50}
       centeredSlides={true}
       autoplay={{
-        delay: isMobile ? 2500 : 5000,
+        delay: isMobile
+          ? Math.floor(Math.random() * (5000 - 2500 + 1)) + 2500
+          : Math.floor(Math.random() * (5000 - 2500 + 1)) + 5000,
         disableOnInteraction: false,
       }}
       effect="slide"

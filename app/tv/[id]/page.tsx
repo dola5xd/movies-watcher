@@ -2,7 +2,6 @@ import CastSlider from "@/app/_components/CastSlider";
 import Link from "next/link";
 import { FaFacebook } from "react-icons/fa6";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
-
 import { getShow, getShowCast, searchSimilarShows } from "@/app/_lib/Api";
 import { imagesUrl } from "@/app/_lib/constants";
 import Image from "next/image";
@@ -10,8 +9,8 @@ import { LuDot } from "react-icons/lu";
 import type { Metadata } from "next";
 import Overview from "@/app/_components/Overview";
 import SimilerShowsSlider from "@/app/_components/SimilerShowsSlider";
-import Header from "@/app/_components/Header";
 import ActionBtns from "@/app/_components/ActionBtns";
+import { JSX } from "react";
 
 export async function generateMetadata({
   params,
@@ -56,7 +55,6 @@ async function page({
 
   return (
     <>
-      <Header />
       <div className=" flex flex-col justify-end min-h-[550px] overflow-x-hidden lg:mx-20">
         <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60 z-0 lg:left-0">
           <Image
@@ -80,11 +78,11 @@ async function page({
             />{" "}
           </div>
           <div className="flex flex-col items-start justify-end md:h-[350px] md:pb-5">
-            <span className="px-4 py-2 text-sm font-bold capitalize rounded bg-primery-black-800 ">
+            <span className="px-4 py-2 text-sm font-bold capitalize rounded bg-primary-black-800 ">
               series
             </span>
-            <h1 className="text-2xl font-medium">{name}</h1>
-            <h3 className="flex items-center gap-1 *:text-xs  *:text-primery-white/75 font-medium flex-wrap">
+            <h2 className="text-2xl font-medium">{name}</h2>
+            <h3 className="flex items-center gap-1 *:text-xs  *:text-primary-white/75 font-medium flex-wrap">
               <span>{Number(number_of_episodes)} Episodes</span>
               <LuDot />
               <span>{first_air_date?.split("-").at(0)}</span>
@@ -111,22 +109,22 @@ async function page({
         </div>
         {cast.length !== 0 && (
           <div className="w-full gap-5 text-sm ">
-            <h1 className="text-3xl font-bold">Top Cast</h1>
+            <h2 className="text-3xl font-bold">Top Cast</h2>
             <CastSlider cast={cast} />
           </div>
         )}
       </div>
       {similarShows?.length > 1 && (
         <div className="px-5 lg:px-10">
-          <h1 className="font-bold">Similar Shows for you</h1>
+          <h2 className="font-bold">Similar Shows for you</h2>
           <SimilerShowsSlider shows={similarShows} />
         </div>
       )}
       <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 sm:text-2xl">
-        <h2>
+        <h3>
           &apos; Our platform is trusted by millions & featuers best uptaded
           movies all around the world &apos;
-        </h2>
+        </h3>
         <div className="flex items-center gap-5 text-2xl py-7">
           <Link href="https://www.facebook.com/dola2005ti" target="_blank">
             <FaFacebook />
