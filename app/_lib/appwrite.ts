@@ -12,7 +12,6 @@ export { ID } from "appwrite";
 
 export async function uploadAvatar(file: File) {
   if (!file || !(file instanceof File)) {
-    console.error("Invalid file:", file);
     throw new Error("Invalid file. Please provide a valid file.");
   }
 
@@ -23,22 +22,17 @@ export async function uploadAvatar(file: File) {
   });
 
   try {
-    // Upload the file to Appwrite storage
     const response = await storage.createFile(bucketID, ID.unique(), file);
 
-    console.log("response: ", response);
-
-    // Construct the file URL
     const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${response.$id}/view?project=${projectID}`;
 
     const prefs = await account.getPrefs();
-    // Update the user's profile with the avatar URL
     await account.updatePrefs({ ...prefs, avatar: fileUrl });
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error uploading avatar:", error.message);
+      throw new Error("Error uploading avatar:" + error.message);
     } else {
-      console.error("Unexpected error:", error);
+      throw new Error("Unexpected error: " + error);
     }
   }
 }
@@ -59,7 +53,7 @@ export async function updateUserData(
         try {
           await storage.deleteFile(bucketID, previousAvatarId);
         } catch (error) {
-          console.error("Failed to delete old avatar:", error);
+          throw new Error("Failed to delete old avatar: " + error);
         }
       }
 
@@ -80,8 +74,7 @@ export async function updateUserData(
 
     console.log("✅ User data updated successfully.");
   } catch (error) {
-    console.error("❌ Failed to update user data:", error);
-    throw error;
+    throw new Error("❌ Failed to update user data: " + error);
   }
 }
 
@@ -90,7 +83,6 @@ export async function getSavedShows() {
     const prefs = await account.getPrefs();
     return prefs.savedShows || [];
   } catch (error) {
-    console.error("Error fetching saved shows:", error);
-    return [];
+    throw new Error("Error fetching saved shows: " + error);
   }
 }

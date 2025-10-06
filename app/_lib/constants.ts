@@ -5,7 +5,7 @@ export const componies = [
   },
   {
     name: "disney",
-    logo: "https://beforeifly.com/new/wp-content/uploads/2016/09/logo-disney-white.png",
+    logo: "https://www.edigitalagency.com.au/wp-content/uploads/new-Disney-logo-white-png-large-size.png",
   },
   {
     name: "HBO max",

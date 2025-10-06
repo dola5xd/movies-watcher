@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useScreen } from "../_context/ScreenContext";
 
 function Overview({ overview }: { overview: string }) {
   const [short, setShortOverview] = useState<boolean>(true);
   const overviewText = short ? overview.slice(0, 100) + " ... " : overview;
-  const isSmallScreen =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 1000px)").matches;
+  const { isSmallScreen } = useScreen();
+
   if (!overview)
     return (
       <h2 className="text-sm text-primary-grey">No overview for this show!</h2>

@@ -3,21 +3,11 @@
 import { motion } from "framer-motion";
 import CompaniesSlide from "./CompaniesSlide";
 import { componies } from "../_lib/constants";
-import { useEffect, useState } from "react";
+import { useScreen } from "../_context/ScreenContext";
 
 function CompaniesSlider() {
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const { isSmallScreen } = useScreen();
 
-  // Track screen size for responsiveness
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 1000px)");
-    const update = () => setIsSmallScreen(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  // Combine companies twice for infinite loop illusion
   const allCompanies = [...componies, ...componies, ...componies];
 
   return (

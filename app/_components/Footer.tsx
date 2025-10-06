@@ -27,7 +27,7 @@ function Footer() {
           <FaGithub />
         </Link>
       </div>
-      <ul className=" flex items-center gap-y-1 gap-x-4 md:gap-4 flex-wrap text-lg hover:*:underline *:duration-500 *:text-nowrap">
+      <ul className=" flex items-center gap-y-1 gap-x-4 md:gap-4 flex-wrap text-lg *:hover:underline *:duration-500 *:text-nowrap">
         <li>
           <Link href="/">Home</Link>
         </li>

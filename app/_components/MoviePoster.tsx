@@ -24,7 +24,7 @@ function MoviePoster({
 
   return (
     <div
-      className="relative flex flex-col min-h-[350px] aspect-[4/7] sm:aspect-[4/5] md:aspect-[2/3] lg:min-h-[200px] rounded-lg before-overlay justify-end content-end pb-4 hover:before:bg-black/25 duration-500 "
+      className="relative flex flex-col min-h-[350px] aspect-[4/7] sm:aspect-[4/5] md:aspect-[2/3] lg:min-h-[200px] rounded-lg before-overlay justify-end content-end pb-4 hover:before:bg-black/25 duration-500"
       onClick={() => redirect(first_air_date ? `tv/${id}` : `movie/${id}`)}
     >
       <Image
@@ -35,12 +35,19 @@ function MoviePoster({
         }
         fill
         quality={fullQuality ? 75 : 50}
-        alt={title ? String(title) : String(name) + " poster"}
-        className="object-cover rounded-lg -z-10 "
+        alt={`${title || name} poster`}
+        className="object-cover rounded-lg -z-10"
+        sizes="
+          (max-width: 640px) 50vw,
+          (max-width: 1024px) 33vw,
+          (max-width: 1280px) 25vw,
+          20vw
+        "
+        priority={false}
       />
       <div className="z-10 flex flex-col justify-end h-full gap-2 pl-2">
-        <h2 className="text-xl font-bold lg:text-2xl text-balance">
-          {title ? title : name}
+        <h2 className="text-lg font-bold lg:text-xl text-balance line-clamp-1">
+          {title || name}
         </h2>
         <h3 className="flex items-center *:flex *:items-center gap-2 text-base">
           <span>
@@ -50,8 +57,8 @@ function MoviePoster({
           |
           <span>
             {release_date
-              ? release_date?.toString().split("-").at(0)
-              : first_air_date?.toString().split("-").at(0)}
+              ? release_date.toString().split("-")[0]
+              : first_air_date?.toString().split("-")[0]}
           </span>
         </h3>
       </div>

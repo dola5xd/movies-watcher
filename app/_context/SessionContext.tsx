@@ -1,55 +1,49 @@
 "use client";
-import { Models } from "appwrite";
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { account } from "../_lib/appwrite";
 
 interface SessionContextType {
-  loggedInUser: Models.User<Models.Preferences> | null;
-  setLoggedInUser: (user: Models.User<Models.Preferences> | null) => void;
+  loggedInUser: any | null;
   loading: boolean;
 }
 
-const sessionContext = createContext<SessionContextType | undefined>(undefined);
+const SessionContext = createContext<SessionContextType>({
+  loggedInUser: null,
+  loading: true,
+});
 
-function SessionProvider({ children }: { children: ReactNode }) {
-  const [loggedInUser, setLoggedInUser] =
-    useState<Models.User<Models.Preferences> | null>(null);
-  const [loading, setLoading] = useState(true); // ✅ Add loading
+export const SessionProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [loggedInUser, setLoggedInUser] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchUser() {
+    const fetchUser = async () => {
       try {
-        const userDetails = await account.get();
-        setLoggedInUser(userDetails);
-      } catch {
+        const user = await account.get();
+        setLoggedInUser(user);
+      } catch (error: any) {
+        // 401 just means no active session, so we silently ignore it
+        if (error?.code !== 401) {
+          console.error("Error fetching Appwrite user:", error);
+        }
         setLoggedInUser(null);
       } finally {
-        setLoading(false); // ✅ Done
+        setLoading(false);
       }
-    }
+    };
 
     fetchUser();
   }, []);
 
   return (
-    <sessionContext.Provider
-      value={{ loggedInUser, setLoggedInUser, loading }} // ✅ Include loading
-    >
+    <SessionContext.Provider value={{ loggedInUser, loading }}>
       {children}
-    </sessionContext.Provider>
+    </SessionContext.Provider>
   );
-}
+};
 
-function useSession() {
-  const context = useContext(sessionContext);
-  if (!context) throw new Error("Context is outside provider!");
-  return context;
-}
-
-export { SessionProvider, useSession };
+export const useSession = () => useContext(SessionContext);

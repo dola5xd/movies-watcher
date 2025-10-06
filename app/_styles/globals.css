@@ -6,14 +6,32 @@
 @import "swiper/css/effect-cards";
 
 @theme {
-  --color-background: #1e1e1e;
-  --color-primary-black-700: #28262d;
-  --color-primary-black-800: #0d0c0f;
-  --color-primary-black-900: #08080a;
-  --color-primary-grey: #9ca4ab;
-  --color-primary-white: #ffffff;
-  --color-primary-red: #eb3f5e;
-  --color-primary-green: #00925d;
+  --color-background: #18181b; /* Deep charcoal background */
+  --color-primary-black-700: #1f1f23; /* Card and section backgrounds */
+  --color-primary-black-800: #141416; /* Navbar / modal backgrounds */
+  --color-primary-black-900: #0d0d0f; /* Deep black for accent areas */
+  --color-primary-grey: #9fa4aa; /* Soft, muted grey for secondary text */
+  --color-primary-white: #f2f2f2; /* Neutral white for text */
+  --color-primary-red: #e50914; /* Netflix-style red for highlights */
+  --color-primary-green: #00a86b; /* Emerald green for success states */
+
+  /* === Gradients & Effects === */
+  --gradient-overlay: linear-gradient(
+    90deg,
+    rgba(10, 10, 15, 0.95),
+    rgba(10, 10, 15, 0.6),
+    transparent
+  );
+  --gradient-button: linear-gradient(
+    90deg,
+    var(--color-primary-red) 0%,
+    #ff4b2b 100%
+  );
+
+  /* === Shadows & Glows === */
+  --shadow-card: 0 4px 25px rgba(0, 0, 0, 0.4);
+  --glow-red: 0 0 10px rgba(229, 9, 20, 0.6);
+  --glow-green: 0 0 10px rgba(0, 184, 122, 0.6);
 }
 
 body {
@@ -33,7 +51,7 @@ body {
   border-radius: 8px;
   border: 3px solid transparent;
   background-clip: content-box;
-  background-color: #eb3f5e;
+  background-color: #18181b;
 }
 
 /* Swiper Styling */

@@ -1,28 +1,19 @@
 "use client";
-import { Autoplay, EffectCards } from "swiper/modules";
+import { EffectCards } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CastSlide from "./CastSlide";
 import { CastData } from "../_types";
+import { useScreen } from "../_context/ScreenContext";
 
 function CastSlider({ cast }: { cast: CastData[] }) {
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 767px)").matches;
-
-  const isSmallScreen =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 1000px)").matches;
+  const { isSmallScreen, isMobile } = useScreen();
 
   return (
     <Swiper
-      modules={[Autoplay, EffectCards]}
+      modules={[EffectCards]}
       slidesPerView={isMobile ? 1 : isSmallScreen ? 3 : 4}
       loop={true}
       spaceBetween={isSmallScreen ? 350 : 150}
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: false,
-      }}
       effect="card"
       className="flex items-center gap-20 py-5 "
       grabCursor
