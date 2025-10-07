@@ -4,10 +4,11 @@ import { IoIosSearch } from "react-icons/io";
 import MobileNav from "../MobileNav";
 import UserProfile from "../UserProfile";
 import HeaderNav from "./HeaderNav";
+import { Models } from "appwrite";
 
 interface Props {
   setOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
-  loggedInUser: any;
+  loggedInUser: Models.User<Models.Preferences> | null;
 }
 
 export default function HeaderActions({ setOpenSearch, loggedInUser }: Props) {

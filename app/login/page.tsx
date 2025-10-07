@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { MdLocalMovies } from "react-icons/md";
 import { CgArrowLeft } from "react-icons/cg";
 import Link from "next/link";
 import { account } from "../_lib/appwrite";

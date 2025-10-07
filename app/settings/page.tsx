@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { account, updateUserData } from "../_lib/appwrite";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 // ✅ Zod Schema
 const schema = z.object({
@@ -154,9 +155,11 @@ function Page() {
             className="relative w-40 h-40 overflow-hidden transition border-2 border-gray-700 rounded-full cursor-pointer group hover:border-primary-red"
           >
             {imagePreview ? (
-              <img
+              <Image
                 src={imagePreview}
                 alt="Avatar Preview"
+                height={64}
+                width={64}
                 className="object-cover object-top w-full h-full"
               />
             ) : (

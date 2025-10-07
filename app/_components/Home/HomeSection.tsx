@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import MoviesSlider from "../MoviesSlider";
+import { ShowData } from "@/app/_types";
 
 function HomeSection({
   headText,
@@ -10,7 +11,7 @@ function HomeSection({
   headText?: string;
   children?: ReactNode;
   className?: string;
-  data?: any[];
+  data?: ShowData[];
 }) {
   return (
     <section className={`${className ?? ""} py-7 px-10 space-y-1.5`}>

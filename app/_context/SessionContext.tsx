@@ -1,15 +1,28 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { account } from "../_lib/appwrite";
+import { Models } from "appwrite";
 
 interface SessionContextType {
-  loggedInUser: any | null;
+  loggedInUser: Models.User<Models.Preferences> | null;
   loading: boolean;
+  setLoggedInUser: Dispatch<
+    SetStateAction<Models.User<Models.Preferences> | null>
+  >;
 }
 
 const SessionContext = createContext<SessionContextType>({
   loggedInUser: null,
   loading: true,
+  setLoggedInUser: () => {},
 });
 
 export const SessionProvider = ({
@@ -17,7 +30,8 @@ export const SessionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [loggedInUser, setLoggedInUser] = useState<any | null>(null);
+  const [loggedInUser, setLoggedInUser] =
+    useState<Models.User<Models.Preferences> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,12 +39,12 @@ export const SessionProvider = ({
       try {
         const user = await account.get();
         setLoggedInUser(user);
-      } catch (error: any) {
-        // 401 just means no active session, so we silently ignore it
-        if (error?.code !== 401) {
-          console.error("Error fetching Appwrite user:", error);
-        }
-        setLoggedInUser(null);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : "Something gone wrong while login";
+        throw new Error(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -40,7 +54,7 @@ export const SessionProvider = ({
   }, []);
 
   return (
-    <SessionContext.Provider value={{ loggedInUser, loading }}>
+    <SessionContext.Provider value={{ loggedInUser, loading, setLoggedInUser }}>
       {children}
     </SessionContext.Provider>
   );

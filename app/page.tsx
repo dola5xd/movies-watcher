@@ -24,10 +24,9 @@ async function page() {
       <Hero />
       <HomeSection headText="Just Release" data={nowPlaying} />
       <HomeSection headText="Populer Of The Week" data={popularMovies} />
-      <HomeSection
-        className="px-0 md:px-7 lg:px-20 py-7"
-        children={<JoinUS />}
-      />
+      <HomeSection className="px-0 md:px-7 lg:px-20 py-7">
+        <JoinUS />
+      </HomeSection>
       <HomeSection headText="Movies" data={moviesData} />
       <HomeSection headText="Series" data={seriesData} />
       <HomeSection headText="Anime" data={animeShows} />

@@ -15,10 +15,11 @@ function ActionBtns({ type, id }: { type: string; id: number }) {
   const { loggedInUser, setLoggedInUser } = useSession();
   const navigate = useRouter();
 
-  const bookmarked =
-    loggedInUser?.prefs.savedShows?.filter(
-      (show: { showID: number; type: string }) => show.showID === id
-    ) || [];
+  const bookmarked = loggedInUser
+    ? loggedInUser.prefs.savedShows?.filter(
+        (show: { showID: number; type: string }) => show.showID === id
+      ) || []
+    : [];
 
   const bookmark = async function () {
     if (loggedInUser) {

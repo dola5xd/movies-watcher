@@ -14,6 +14,7 @@ import Logo from "../_components/Logo";
 import { FaXmark } from "react-icons/fa6";
 import Loading from "../loading";
 import Spinner from "../_components/Spinner";
+import Image from "next/image";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -181,9 +182,11 @@ export default function RegisterPage() {
               <div className="flex items-center gap-4">
                 {avatarPreview && (
                   <div className="relative flex items-center gap-4 mb-3">
-                    <img
+                    <Image
                       src={avatarPreview}
                       alt="Avatar Preview"
+                      height={64}
+                      width={64}
                       className="object-cover w-16 h-16 border rounded-full border-primary-grey"
                     />
                     <button

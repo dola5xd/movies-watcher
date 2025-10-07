@@ -19,10 +19,8 @@ const ScreenContext = createContext<ScreenContextType>({
   isMobile: false,
 });
 
-// ✅ Custom hook for media queries with SSR-safe fallback
 function useMediaQuery(query: string) {
   const [matches, setMatches] = useState<boolean>(() => {
-    // Avoid hydration mismatch: default false until client mounts
     if (typeof window === "undefined") return false;
     return window.matchMedia(query).matches;
   });
@@ -32,22 +30,13 @@ function useMediaQuery(query: string) {
 
     const media = window.matchMedia(query);
 
-    // Immediate sync
-    setMatches(media.matches);
+    const listener = (event: MediaQueryListEvent) => setMatches(event.matches);
 
-    // Modern browsers
-    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
-    media.addEventListener?.("change", handler);
-
-    // Legacy fallback
-    // @ts-ignore
-    media.addListener?.(handler);
-
-    return () => {
-      media.removeEventListener?.("change", handler);
-      // @ts-ignore
-      media.removeListener?.(handler);
-    };
+    // ✅ Use only modern event API when available
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", listener);
+      return () => media.removeEventListener("change", listener);
+    }
   }, [query]);
 
   return matches;

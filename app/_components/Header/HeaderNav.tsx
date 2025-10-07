@@ -1,8 +1,13 @@
 "use client";
 
+import { Models } from "appwrite";
 import Link from "next/link";
 
-export default function HeaderNav({ loggedInUser }: { loggedInUser: any }) {
+export default function HeaderNav({
+  loggedInUser,
+}: {
+  loggedInUser: Models.User<Models.Preferences> | null;
+}) {
   return (
     <ul className="hidden lg:flex gap-4 text-lg font-medium text-primary-white/90 hover:*:text-primary-white/100 transition-colors *:duration-300 *:hover:-translate-y-1 *:hover:opacity-75">
       <li>
