@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { PAGE_SIZE } from "../_lib/constants";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -18,7 +19,7 @@ function Pagination({ total: totalPages }: { total: number }) {
 
   function goToPage(page: number) {
     params.set("page", String(page));
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }
 
   function nextPage() {
@@ -31,7 +32,6 @@ function Pagination({ total: totalPages }: { total: number }) {
 
   if (pageCount <= 1) return null;
 
-  // Generate visible page numbers (e.g., [2, 3, 4, 5, 6])
   const getPageNumbers = () => {
     const pages: number[] = [];
     const maxVisible = 5;
@@ -51,51 +51,92 @@ function Pagination({ total: totalPages }: { total: number }) {
   };
 
   return (
-    <div className="flex flex-col-reverse items-center justify-center w-full md:flex- gap-y-5 py-7">
-      <p className="ml-[0.8rem] [&>span]:font-semibold text-sm lg:text-base">
-        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
-        <span>
-          {currentPage === pageCount
-            ? totalPages * PAGE_SIZE
-            : currentPage * PAGE_SIZE}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="flex flex-col items-center justify-center w-full gap-5 py-8 md:flex-row md:justify-between"
+    >
+      {/* Info Text */}
+      <motion.p
+        className="text-xs text-gray-400 md:text-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        Showing{" "}
+        <span className="font-semibold text-white">
+          {(currentPage - 1) * PAGE_SIZE + 1}
         </span>{" "}
-        of <span>{totalPages * PAGE_SIZE}</span> results
-      </p>
+        to{" "}
+        <span className="font-semibold text-white">
+          {Math.min(currentPage * PAGE_SIZE, totalPages * PAGE_SIZE)}
+        </span>{" "}
+        of{" "}
+        <span className="font-semibold text-white">
+          {totalPages * PAGE_SIZE}
+        </span>{" "}
+        results
+      </motion.p>
 
+      {/* Page Controls */}
       <div className="flex items-center gap-2">
-        <button
-          title="previous page"
-          type="button"
+        {/* Prev */}
+        <motion.button
+          title="Previous page"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.2 }}
           onClick={prevPage}
           disabled={currentPage === 1}
-          className="px-3 py-3 duration-500 rounded cursor-pointer outline-2 outline-primary-red hover:bg-primary-red"
+          className={`p-2 rounded-md transition-all duration-300 ${
+            currentPage === 1
+              ? "opacity-40 cursor-not-allowed"
+              : "hover:bg-primary-red/80"
+          } bg-primary-red/50 text-white`}
         >
-          <HiChevronLeft />
-        </button>
+          <HiChevronLeft className="w-5 h-5" />
+        </motion.button>
 
+        {/* Page Numbers */}
         {getPageNumbers().map((page) => (
-          <PaginationButton
+          <motion.div
             key={page}
-            onClick={() => goToPage(page)}
-            className={`${
-              currentPage === page ? "bg-primary-red" : "black-800k"
-            } border border-gray-300 `}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
-            {page}
-          </PaginationButton>
+            <PaginationButton
+              onClick={() => goToPage(page)}
+              className={`px-3 py-1.5 border rounded-md text-sm font-medium ${
+                currentPage === page
+                  ? "bg-primary-red text-white border-primary-red"
+                  : "bg-black border-gray-600 text-gray-300 hover:bg-gray-800"
+              } transition-all duration-300`}
+            >
+              {page}
+            </PaginationButton>
+          </motion.div>
         ))}
 
-        <button
-          title="next page"
-          type="button"
+        {/* Next */}
+        <motion.button
+          title="Next page"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.2 }}
           onClick={nextPage}
           disabled={currentPage === pageCount}
-          className="px-3 py-3 duration-500 rounded cursor-pointer outline-2 outline-primary-red hover:bg-primary-red "
+          className={`p-2 rounded-md transition-all duration-300 ${
+            currentPage === pageCount
+              ? "opacity-40 cursor-not-allowed"
+              : "hover:bg-primary-red/80"
+          } bg-primary-red/50 text-white`}
         >
-          <HiChevronRight />
-        </button>
+          <HiChevronRight className="w-5 h-5" />
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -13,6 +13,7 @@ import { useSession } from "../_context/SessionContext";
 import Logo from "../_components/Logo";
 import Spinner from "../_components/Spinner";
 import Loading from "../loading";
+import Image from "next/image";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -63,23 +64,31 @@ export default function Page() {
   if (loading) return <Loading />;
 
   return (
-    <main className="fixed inset-0 flex flex-col items-center justify-center min-h-screen px-6 py-12 gap-y-6 bg-background md:py-0">
+    <main className="fixed h-screen w-screen inset-0 z-50 flex flex-col items-center justify-center min-h-screen px-4 py-10 bg-background md:px-10">
       <Link
         href="/"
-        className="flex items-center self-start gap-2 text-base text-primary-grey"
+        className="flex items-center gap-2 mb-8 text-sm text-gray-400 hover:text-white transition-colors self-start"
       >
         <CgArrowLeft />
         Back to Home
       </Link>
 
-      <section className="flex flex-col w-full max-w-6xl overflow-hidden shadow-xl h-3/4 md:flex-row rounded-xl">
-        <div className="relative w-full md:w-1/2 bg-[url('https://wallpapersok.com/images/high/american-horror-movie-posters-9pvmdtvz4cb0xl37.webp')] bg-cover bg-center before:absolute before:inset-0 before:bg-black/75">
-          <div className="relative z-10 flex flex-col items-center justify-center h-full p-10 space-y-4 text-center text-white">
+      <section className="flex flex-col w-full max-w-6xl overflow-hidden shadow-xl h-3/4 md:flex-row-reverse rounded-xl">
+        <div className="relative hidden w-1/2 md:flex">
+          <Image
+            src="https://wallpapersok.com/images/high/american-horror-movie-posters-9pvmdtvz4cb0xl37.webp"
+            alt="Cinema background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/40" />
+          <div className="relative z-10 flex flex-col justify-center h-full p-10 space-y-4 text-center text-white">
             <Logo />
-
-            <p className="max-w-lg text-base text-gray-300">
-              Dive into a cinematic experience. Watch, review, and explore an
-              ever-growing collection of films curated just for you.
+            <p className="max-w-md mx-auto text-base text-gray-300">
+              Join <span className="text-primary-red">Movies Watcher</span> and
+              explore a world of cinema. Discover, rate, and share your favorite
+              films — all in one place.
             </p>
           </div>
         </div>

@@ -55,7 +55,7 @@ function HomeSlider({ data }: { data: ShowData[] }) {
               src={imagesUrl + item.backdrop_path}
               fill
               priority={item === data[0]}
-              quality={70}
+              quality={75}
               alt={`${title} poster`}
               className="object-cover rounded-lg -z-10"
               sizes="

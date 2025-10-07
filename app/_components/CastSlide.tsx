@@ -9,7 +9,14 @@ const CastSlide: React.FC<CastData> = ({ name, character, profile_path }) => {
           fill
           src={"http://image.tmdb.org/t/p/w500" + profile_path}
           alt={name + " Avatar"}
-          quality={50}
+          quality={75}
+          sizes="
+          (max-width: 640px) 50vw,
+          (max-width: 1024px) 33vw,
+          (max-width: 1280px) 25vw,
+          20vw
+        "
+          priority={false}
           className="object-cover object-center rounded-full "
         />
       </span>

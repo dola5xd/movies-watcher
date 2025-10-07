@@ -14,7 +14,7 @@ export default function Header() {
   if (loading) return <Loading />;
 
   return (
-    <header className="relative z-20 flex items-center justify-between w-full px-5 pb-5 pt-7 md:px-10 lg:py-7">
+    <header className="absolute z-20 flex items-center justify-between w-full px-5 pb-5 pt-7 md:px-10 lg:py-7">
       <Logo />
       <HeaderActions
         setOpenSearch={setOpenSearch}

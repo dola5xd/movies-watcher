@@ -20,7 +20,7 @@ async function page() {
     ]);
 
   return (
-    <main>
+    <main className="pt-20">
       <Hero />
       <HomeSection headText="Just Release" data={nowPlaying} />
       <HomeSection headText="Populer Of The Week" data={popularMovies} />

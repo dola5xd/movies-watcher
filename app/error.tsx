@@ -13,7 +13,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 px-10 text-center pt-28">
+    <div className="flex flex-col items-center justify-center gap-4 px-10 text-center pt-28 min-h-[70vh]">
       <h3 className="font-bold text-primary-red">** Not Found **</h3>
       <p className="text-AXxl">{error.message}</p>
       <Link

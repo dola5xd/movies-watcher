@@ -1,7 +1,4 @@
 import CastSlider from "@/app/_components/CastSlider";
-import Link from "next/link";
-import { FaFacebook } from "react-icons/fa6";
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { getShow, getShowCast, searchSimilarShows } from "@/app/_lib/Api";
 import { imagesUrl } from "@/app/_lib/constants";
 import Image from "next/image";
@@ -11,6 +8,10 @@ import Overview from "@/app/_components/Overview";
 import SimilerShowsSlider from "@/app/_components/SimilerShowsSlider";
 import ActionBtns from "@/app/_components/ActionBtns";
 import { JSX } from "react";
+import {
+  div as MotionDiv,
+  section as MotionSection,
+} from "motion/react-client";
 
 export async function generateMetadata({
   params,
@@ -18,7 +19,6 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const id = (await params).id;
-
   const show = await getShow("tv", id);
 
   return {
@@ -38,15 +38,13 @@ export async function generateMetadata({
   };
 }
 
-async function page({
+export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<JSX.Element> {
   const { id } = await params;
-
   const show = await getShow("tv", id);
-
   if (show.success === false) throw new Error("Wrong id!");
 
   const { name, genres, first_air_date, number_of_episodes, overview } = show;
@@ -54,124 +52,115 @@ async function page({
   const similarShows = await searchSimilarShows("tv", id);
 
   return (
-    <>
-      <div className=" flex flex-col justify-end min-h-[550px] overflow-x-hidden lg:mx-20">
-        <div className="absolute min-h-[550px] w-full before-overlay before:z-10 before:bg-opacity-60 z-0 lg:left-0">
-          <Image
-            src={
-              show.backdrop_path
-                ? imagesUrl + show.backdrop_path
-                : imagesUrl + show.poster_path
-            }
-            alt={name + "poster"}
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="z-10 flex flex-col items-start gap-5 mb-3 px-7 md:gap-5 md:mb-5 md:flex-row md:content-end ">
-          <div className="relative h-[250px] min-w-[150px] md:h-[350px] md:min-w-[200px] rounded-md justify-end">
+    <div className="bg-background text-white overflow-x-hidden">
+      {/* 🎥 Hero Section */}
+      <section className="relative w-full min-h-[80vh] md:min-h-[85vh] overflow-hidden">
+        <Image
+          src={
+            show.backdrop_path
+              ? imagesUrl + show.backdrop_path
+              : imagesUrl + show.poster_path
+          }
+          alt={`${name} backdrop`}
+          fill
+          priority
+          className="object-cover object-top opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent z-10" />
+
+        <div className="z-[12] flex flex-col md:flex-row items-end gap-6 px-6 md:px-16 bottom-10 md:bottom-20 absolute w-full">
+          {/* Poster */}
+          <MotionDiv
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative w-[150px] md:w-[220px] aspect-[2/3] rounded-xl overflow-hidden shadow-lg"
+          >
             <Image
               src={imagesUrl + show.poster_path}
-              alt={name + "poster"}
+              alt={`${name} poster`}
               fill
-              className="object-cover duration-500 rounded-md hover:scale-105"
-            />{" "}
-          </div>
-          <div className="flex flex-col items-start justify-end md:h-[350px] md:pb-5">
-            <span className="px-4 py-2 text-sm font-bold capitalize rounded bg-primary-black-800 ">
-              series
-            </span>
-            <h2 className="text-2xl font-medium">{name}</h2>
-            <h3 className="flex items-center gap-1 *:text-xs  *:text-primary-white/75 font-medium flex-wrap">
+              quality={50}
+              sizes="
+          (max-width: 640px) 50vw,
+          (max-width: 1024px) 33vw,
+          (max-width: 1280px) 25vw,
+          20vw
+        "
+              priority={false}
+              className="object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </MotionDiv>
+
+          {/* Info */}
+          <MotionDiv
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="flex flex-col justify-end max-w-2xl"
+          >
+            <h1 className="text-3xl md:text-5xl font-bold mb-2">{name}</h1>
+            <div className="flex flex-wrap items-center gap-1 text-sm text-white/70 mb-3">
               <span>{Number(number_of_episodes)} Episodes</span>
               <LuDot />
-              <span>{first_air_date?.split("-").at(0)}</span>
+              <span>{first_air_date?.split("-")?.[0]}</span>
               <LuDot />
-              <div className="flex items-center gap-y-1 flex-wrap *:text-center">
-                {genres?.map((genre, i) => (
-                  <>
-                    <span key={genre.id} className="font-medium duration-500">
-                      {genre.name}
-                    </span>
-                    {i !== genres.length - 1 && <LuDot />}
-                  </>
-                ))}
-              </div>
-            </h3>
-            <ActionBtns type="tv" id={Number(id)} />
-          </div>
+              {genres?.map((g, i) => (
+                <span key={g.id} className="capitalize">
+                  {g.name}
+                  {i !== genres.length - 1 && ","}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex gap-3 mt-3">
+              <ActionBtns type="tv" id={Number(id)} />
+            </div>
+          </MotionDiv>
         </div>
-      </div>
-      <div className="flex flex-col items-start py-4 px-7 gap-7 lg:px-10">
-        <div>
-          <h3 className="font-bold">Story Line</h3>
-          <Overview overview={String(overview)} />
-        </div>
-        {cast.length !== 0 && (
-          <div className="w-full gap-5 text-sm ">
-            <h2 className="text-3xl font-bold">Top Cast</h2>
-            <CastSlider cast={cast} />
-          </div>
-        )}
-      </div>
-      {similarShows?.length > 1 && (
-        <div className="px-5 lg:px-10">
-          <h2 className="font-bold">Similar Shows for you</h2>
-          <SimilerShowsSlider shows={similarShows} />
-        </div>
+      </section>
+
+      {/* 📖 Storyline Section */}
+      <MotionSection
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className=" flex items-start gap-x-7 px-6 md:px-16 py-10 bg-background"
+      >
+        <h2 className="text-2xl md:text-3xl font-semibold mb-4">Storyline</h2>
+        <Overview overview={String(overview)} />
+      </MotionSection>
+
+      {/* 👥 Top Cast Section */}
+      {cast.length > 0 && (
+        <MotionSection
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className=" flex items-center gap-x-7 px-6 md:px-16 py-10 bg-background"
+        >
+          <h2 className="text-2xl md:text-3xl font-semibold mb-4">Top Cast</h2>
+          <CastSlider cast={cast} />
+        </MotionSection>
       )}
-      <footer className="flex flex-col gap-4 px-10 text-base md:gap-7 py-7 sm:text-2xl">
-        <h3>
-          &apos; Our platform is trusted by millions & featuers best uptaded
-          movies all around the world &apos;
-        </h3>
-        <div className="flex items-center gap-5 text-2xl py-7">
-          <Link href="https://www.facebook.com/dola2005ti" target="_blank">
-            <FaFacebook />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/adel-yasser-a28181242/"
-            target="_blank"
-          >
-            <FaLinkedin />
-          </Link>
-          <Link href="https://www.instagram.com/3del_5xd" target="_blank">
-            <FaInstagram />
-          </Link>
-          <Link href="https://github.com/dola5xd" target="_blank">
-            <FaGithub />
-          </Link>
-        </div>
-        <ul className=" flex items-center gap-y-1 gap-x-4 md:gap-4 flex-wrap text-lg hover:*:underline *:duration-500 *:text-nowrap">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/bookmarks">Bookmarks</Link>
-          </li>
-          <li>
-            <Link href="/movies">Movies</Link>
-          </li>
-          <li>
-            <Link href="/series">TV Shows</Link>
-          </li>
-          <li>
-            <Link href="/anime">Anime</Link>
-          </li>
-        </ul>
-        <p className="text-base text-pretty">
-          &copy; {new Date().getFullYear()} Developed with ❤ by{" "}
-          <Link
-            href="https://my-portfolio-website-orpin.vercel.app/"
-            target="blank"
-            className="underline"
-          >
-            Adel Yasser
-          </Link>{" "}
-        </p>
-      </footer>
-    </>
+
+      {/* 🎬 Similar Shows Section */}
+      {similarShows?.length > 1 && (
+        <MotionSection
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="px-6 md:px-16 py-10 bg-background"
+        >
+          <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+            More Like This
+          </h2>
+          <SimilerShowsSlider shows={similarShows} />
+        </MotionSection>
+      )}
+    </div>
   );
 }
-
-export default page;

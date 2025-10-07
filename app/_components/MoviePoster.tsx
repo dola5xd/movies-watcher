@@ -34,7 +34,7 @@ function MoviePoster({
             : "http://image.tmdb.org/t/p/w500" + poster
         }
         fill
-        quality={fullQuality ? 75 : 50}
+        quality={75}
         alt={`${title || name} poster`}
         className="object-cover rounded-lg -z-10"
         sizes="

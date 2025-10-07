@@ -2,9 +2,20 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    qualities: [25, 50, 75],
     remotePatterns: [
       {
+        protocol: "https",
+        hostname: "wallpapersok.com",
+        pathname: "/**",
+      },
+      {
         protocol: "http",
+        hostname: "image.tmdb.org",
+        pathname: "/t/p/**",
+      },
+      {
+        protocol: "https",
         hostname: "image.tmdb.org",
         pathname: "/t/p/**",
       },

@@ -48,7 +48,7 @@ function UserProfile() {
             }
             width={40}
             height={40}
-            quality={50}
+            quality={75}
             alt="Profile avatar"
             className="rounded-full object-cover w-[40px] h-[40px]"
           />
@@ -69,7 +69,7 @@ function UserProfile() {
               }
               width={50}
               height={50}
-              quality={50}
+              quality={75}
               alt="Profile avatar"
               className="rounded-full object-cover w-[40px] h-[40px]"
             />
