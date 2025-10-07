@@ -42,11 +42,11 @@ export const SessionProvider = ({
         setLoggedInUser(user);
       } catch (error: unknown) {
         // If no session, just stay logged out (no crash)
-        if (error?.code === 401 || error?.response?.code === 401) {
-          console.info("No Appwrite session — user is a guest.");
+        if (error instanceof Error) {
+          console.info(error.message);
           setLoggedInUser(null);
         } else {
-          console.error("Appwrite account.get() error:", error);
+          console.info("Appwrite account.get() error:", error);
         }
       } finally {
         setLoading(false);
