@@ -13,9 +13,14 @@ function UserProfile() {
   const navigate = useRouter();
 
   const logout = async () => {
-    await account.deleteSession("current");
-    setLoggedInUser(null);
-    navigate.push("/");
+    try {
+      await account.deleteSession("current");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      setLoggedInUser(null);
+      navigate.push("/");
+    }
   };
 
   const [menu, setMenu] = useState<boolean>(false);

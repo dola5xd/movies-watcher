@@ -37,14 +37,17 @@ export const SessionProvider = ({
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // Try to get current Appwrite session user
         const user = await account.get();
         setLoggedInUser(user);
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : "Something gone wrong while login";
-        throw new Error(errorMessage);
+      } catch (error: any) {
+        // If no session, just stay logged out (no crash)
+        if (error?.code === 401 || error?.response?.code === 401) {
+          console.info("No Appwrite session — user is a guest.");
+          setLoggedInUser(null);
+        } else {
+          console.error("Appwrite account.get() error:", error);
+        }
       } finally {
         setLoading(false);
       }
