@@ -6,12 +6,12 @@ import { div as MotionDiv } from "motion/react-client";
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
-  };
+  }>;
 }) {
-  const currentPage = Number(searchParams?.page || 1);
-  const moviesData = await getMoviesPages(currentPage);
+  const currentPage = (await searchParams)?.page || 1;
+  const moviesData = await getMoviesPages(Number(currentPage));
   const { results: data, total_pages } = moviesData ?? {};
 
   return (
